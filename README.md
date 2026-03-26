@@ -1,5 +1,7 @@
 # QuantLab
 
+English | [中文](README_CN.md)
+
 A quantitative trading system for China A-share markets, fusing three Microsoft open-source projects into a unified T+1 daily trading pipeline.
 
 | Component | Role |
@@ -83,7 +85,7 @@ A quantitative trading system for China A-share markets, fusing three Microsoft 
 
 ```bash
 # Clone the repo (with submodules)
-git clone https://github.com/yourname/quantlab.git
+git clone --recursive https://github.com/sqyangx/quantlab.git
 cd quantlab
 
 # Create conda environment

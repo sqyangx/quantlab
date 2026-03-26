@@ -19,6 +19,59 @@ from typing import Optional
 logger = logging.getLogger(__name__)
 
 
+# ------------------------------------------------------------------
+# Fix qlib import shadowing by git submodule directory
+# ------------------------------------------------------------------
+# When running from the project root, sys.path[0] is the project dir
+# which contains a `qlib/` submodule directory. Python treats this as
+# a namespace package, shadowing the real qlib installed via pip.
+# Fix: if qlib is a namespace package (no __file__), remove and reimport.
+
+def _fix_qlib_import():
+    """Ensure `import qlib` resolves to the pip-installed package, not the submodule dir."""
+    try:
+        import qlib as _qlib
+    except ImportError:
+        return  # qlib not available at all
+
+    if getattr(_qlib, '__file__', None) is not None:
+        return  # real package, no fix needed
+
+    # It's a namespace package from the submodule directory — fix it
+    # Remove the bogus qlib and all sub-modules from sys.modules
+    to_remove = [k for k in sys.modules if k == 'qlib' or k.startswith('qlib.')]
+    for k in to_remove:
+        del sys.modules[k]
+
+    # Find and prioritize the real qlib path (inside the submodule: qlib/qlib/)
+    root = _monorepo_root_early()
+    if root:
+        real_qlib_parent = root / "qlib"  # qlib submodule dir containing qlib/ package
+        s = str(real_qlib_parent)
+        if s not in sys.path:
+            sys.path.insert(0, s)
+
+    # Verify fix worked
+    import qlib as _qlib2
+    if getattr(_qlib2, '__file__', None) is None:
+        logger.warning(
+            "Failed to fix qlib import shadowing. "
+            "Try: pip install -e ./qlib  (from project root)"
+        )
+
+
+def _monorepo_root_early() -> Optional[Path]:
+    """Detect monorepo root (lightweight version for early startup)."""
+    pkg_dir = Path(__file__).resolve().parent
+    candidate = pkg_dir.parent
+    if (candidate / "quantlab").is_dir():
+        return candidate
+    return None
+
+
+_fix_qlib_import()
+
+
 def _monorepo_root() -> Optional[Path]:
     """Detect monorepo root by looking for quantlab/ as a sibling directory."""
     pkg_dir = Path(__file__).resolve().parent  # .../quantlab/

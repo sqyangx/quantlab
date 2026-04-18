@@ -12,47 +12,7 @@ A quantitative trading system for China A-share markets, fusing three Microsoft 
 
 ## Architecture
 
-```
-  Day T Close
-      │
-      ▼
-┌─────────────────────────────────────────────┐
-│         Data Layer (Qlib)                   │
-│  OHLCV + Alpha158 factors + calendar        │
-│  Strict time isolation: data ≤ T only       │
-└─────┬──────────────┬──────────────┬─────────┘
-      │              │              │
-      ▼              ▼              ▼
-┌──────────┐  ┌────────────┐  ┌────────────┐
-│ Alpha158 │  │   Kronos   │  │  RD-Agent  │
-│ +LightGBM│  │ 5-day K-line│  │ Evolved    │
-│ trend/   │  │ forecast   │  │ mean-rev   │
-│ momentum │  │ + uncertainty│ │ factors    │
-└────┬─────┘  └─────┬──────┘  └─────┬──────┘
-     │              │               │
-     └──────────────┼───────────────┘
-                    ▼
-         ┌──────────────────┐
-         │  Signal Ensemble │
-         │  IC-weighted rank│
-         │  normalization   │
-         └────────┬─────────┘
-                  ▼
-         ┌──────────────────┐
-         │  T+1 Execution   │
-         │  Open-price trade│
-         └────────┬─────────┘
-                  ▼
-         ┌──────────────────┐
-         │  Risk Control    │
-         │  3-level checks  │
-         └────────┬─────────┘
-                  ▼
-         ┌──────────────────┐
-         │  Evaluation      │
-         │  Sharpe, IC, etc │
-         └──────────────────┘
-```
+<img width="1024" height="1536" alt="ChatGPT Image 2026年4月18日 20_45_33" src="https://github.com/user-attachments/assets/e15b27b8-69a3-4df0-ac72-9df71e04c311" />
 
 **Key design principle:** All data queries enforce `anchor_date` — no module may access data beyond date T, preventing forward-looking bias.
 

@@ -4,13 +4,23 @@ English | [中文](README_CN.md)
 
 A quantitative trading system for China A-share markets, fusing three Microsoft open-source projects into a unified T+1 daily trading pipeline.
 
+> Current architecture map: [docs/project_architecture.html](docs/project_architecture.html)
+
 | Component | Role |
 |-----------|------|
 | [Qlib](https://github.com/microsoft/qlib) | Data infrastructure, Alpha158 factor engine, backtesting framework |
 | [Kronos](https://github.com/microsoft/Chronos-Forecasting) | Foundation Transformer model for K-line sequence forecasting |
 | [RD-Agent](https://github.com/microsoft/RD-Agent) | LLM-driven evolutionary R&D agent for automated factor/model discovery |
 
+## Recent Additions
+
+- **Agentic review layer**: `quantlab.agentic` adds a reusable post-selection review module for liquidity checks, sector-flow exposure, industry concentration, veto/reduce/approve decisions, and daily review exports.
+- **Sector fund-flow data layer**: `quantlab.data.sector_flow_*` downloads, normalizes, aligns, and featurizes sector fund-flow data so it can be joined with the existing Qlib daily calendar and industry map.
+- **Project architecture HTML**: [docs/project_architecture.html](docs/project_architecture.html) provides a visual map of data, signals, selector fusion, agentic review, execution, risk, evaluation, and operations.
+
 ## Architecture
+
+For the latest full-system view, open [docs/project_architecture.html](docs/project_architecture.html).
 
 <img width="1024" height="1536" alt="ChatGPT Image 2026年4月18日 20_45_33" src="https://github.com/user-attachments/assets/e15b27b8-69a3-4df0-ac72-9df71e04c311" />
 
@@ -30,6 +40,8 @@ A quantitative trading system for China A-share markets, fusing three Microsoft 
 | M7 Risk | `risk_control/risk_control.py` | Single-stock stoploss, industry cap, portfolio circuit breaker |
 | M8 Evaluation | `evaluation/evaluation.py` | Performance metrics (Sharpe, IC decay, attribution) |
 | M9 Runner | `main.py` | Daily backtest scheduler with checkpoint/resume |
+| Agentic Review | `agentic/` | Independent review layer for candidate ranking, risk findings, veto/reduce decisions, and review artifacts |
+| Sector Flow | `data/sector_flow_*.py` | Sector fund-flow download, normalization, calendar alignment, and rolling features |
 
 ## Quick Start
 
@@ -138,6 +150,7 @@ quantlab/
 │   ├── backtest.yaml           # Main backtest config
 │   ├── kronos_recipes.yaml     # Kronos model recipes
 │   └── rdagent_evolution.yaml  # RD-Agent evolution settings
+├── agentic/                    # Agentic candidate review layer
 ├── data/                       # M1 & M1.5: Data layer
 ├── signal/                     # M2-M5: Signal pipelines
 ├── execution/                  # M6: Trade execution
@@ -150,6 +163,7 @@ quantlab/
 
 ## Documentation
 
+- [docs/project_architecture.html](docs/project_architecture.html) - Current architecture map and new agentic/sector-flow design
 - [DESIGN.md](DESIGN.md) — Architecture overview (Chinese)
 - [DETAIL_DESIGN.md](DETAIL_DESIGN.md) — Detailed module specifications M1-M9 (Chinese)
 - [docs/](docs/) — Per-module usage guides (Chinese)

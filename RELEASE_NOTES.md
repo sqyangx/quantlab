@@ -14,8 +14,10 @@
   - `sector_flow_features.py` builds rolling sector-flow ranks, z-scores, persistence, and hot/cold sector labels.
   - `sector_flow_utils.py` centralizes calendar alignment, standard columns, and table I/O.
 - Added `docs/project_architecture.html`, a static architecture overview for the full QuantLab pipeline.
+- Linked the architecture overview from `README.md` and `README_CN.md` so the GitHub project entry points expose the new design directly.
 
 ### Changed
 
 - Ignored external TradingAgents reference artifacts via `.gitignore`; QuantLab now keeps only the derived `quantlab.agentic` module rather than vendoring the upstream project.
+- Updated README module descriptions to include the independent agentic review layer and sector fund-flow data layer.
 

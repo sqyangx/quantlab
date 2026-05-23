@@ -1,0 +1,97 @@
+version: 1
+required_fields:
+  - name
+  - role
+  - hypothesis
+  - inputs
+  - operator
+  - windows
+  - transforms
+  - formula
+  - direction
+  - expected_effect
+  - failure_modes
+  - novelty_note
+  - validator_hint
+roles:
+  - alpha_ranker
+  - risk_filter
+  - entry_confirmation
+  - regime_gate
+  - residual_alpha
+inputs:
+  - open
+  - high
+  - low
+  - close
+  - volume
+  - amount
+  - factor
+operators:
+  - ma_deviation
+  - bollinger_position
+  - range_close_position
+  - return
+  - return_acceleration
+  - cross_window_disagreement
+  - realized_volatility
+  - range_volatility
+  - asymmetric_up_down_volatility
+  - volume_zscore
+  - volume_price_divergence
+  - amihud_proxy
+  - liquidity_shock_reversal
+  - regime_gated_interaction
+transforms:
+  - rolling_zscore
+  - rolling_rank
+  - cross_sectional_rank
+  - winsorize
+  - sigmoid
+  - tanh
+  - clip
+  - rolling_quantile_gate
+  - neutralize_by_market
+directions:
+  - higher_is_better
+  - lower_is_better
+  - higher_is_risk
+  - gate_true_is_allowed
+validation_by_role:
+  alpha_ranker:
+    primary:
+      - valid_rank_ic
+      - test_rank_ic
+      - positive_offset_ratio
+    secondary:
+      - max_corr_existing
+      - group_return_monotonicity
+  risk_filter:
+    primary:
+      - baseline_drawdown_delta
+      - bad_trade_filter_rate
+      - calmar_delta
+    secondary:
+      - opportunity_retention
+      - turnover_delta
+  entry_confirmation:
+    primary:
+      - baseline_hit_rate_delta
+      - accepted_trade_return_delta
+    secondary:
+      - opportunity_retention
+      - yearly_stability
+  regime_gate:
+    primary:
+      - exposure_adjusted_calmar_delta
+      - exposure_adjusted_sharpe_delta
+    secondary:
+      - yearly_stability
+      - crisis_period_behavior
+  residual_alpha:
+    primary:
+      - residual_rank_ic
+      - residual_icir
+    secondary:
+      - max_corr_existing
+      - combo_delta_ann

@@ -35,7 +35,7 @@ For the latest full-system view, open the [rendered HTML preview](https://htmlpr
 | M1.5 Viewer | `data/data_viewer.py` | CSV export, K-line charts (Plotly), portfolio overview |
 | M2 Alpha | `signal/signal_alpha.py` | Alpha158 + LightGBM (daily trend/momentum signal) |
 | M3 Kronos | `signal/signal_kronos.py` | Kronos 5-day forecast (K-line pattern signal) |
-| M4 RD-Agent | `signal/signal_rdagent.py` | RD-Agent evolved factors (mean-reversion signal) |
+| M4 RD-Agent | `signal/signal_rdagent.py`, `signal/factor_spec.py` | RD-Agent evolved factors and deterministic factor-spec compilation |
 | M5 Ensemble | `signal/signal_ensemble.py` | Signal fusion (rank normalization, expanding IC weighting) |
 | M6 Execution | `execution/execution.py` | T+1 open-price trade execution |
 | M7 Risk | `risk_control/risk_control.py` | Single-stock stoploss, industry cap, portfolio circuit breaker |
@@ -166,6 +166,7 @@ quantlab/
 
 - [Agentic feature article](https://htmlpreview.github.io/?https://github.com/sqyangx/quantlab/blob/main/docs/agentic_feature_article.html) - Detailed introduction to the agentic review layer and sector-flow feature design ([source](docs/agentic_feature_article.html))
 - [Rendered architecture map](https://htmlpreview.github.io/?https://github.com/sqyangx/quantlab/blob/main/docs/project_architecture.html) - Current architecture map and new agentic/sector-flow design ([source](docs/project_architecture.html))
+- [Factor-Spec Pipeline](docs/factor_spec_pipeline.md) - Structured factor specification, deterministic compilation, and sampled smoke testing for RD-Agent-style factor search
 - [DESIGN.md](DESIGN.md) — Architecture overview (Chinese)
 - [DETAIL_DESIGN.md](DETAIL_DESIGN.md) — Detailed module specifications M1-M9 (Chinese)
 - [docs/](docs/) — Per-module usage guides (Chinese)

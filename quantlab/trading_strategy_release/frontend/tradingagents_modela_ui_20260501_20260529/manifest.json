@@ -1,0 +1,26 @@
+{
+  "analysis_dir": "quantlab/tradingagents_modela_release/data/tradingagents_modela_rerank_20260501_20260529",
+  "portfolio_dir": "quantlab/tradingagents_modela_release/data/5min_modela_portfolio_backtest_20260501_20260529",
+  "output_dir": "quantlab/trading_strategy_release/frontend/tradingagents_modela_ui_20260501_20260529",
+  "pages": [
+    "index.html",
+    "2026-05-06.html",
+    "2026-05-07.html",
+    "2026-05-08.html",
+    "2026-05-11.html",
+    "2026-05-12.html",
+    "2026-05-13.html",
+    "2026-05-14.html",
+    "2026-05-15.html",
+    "2026-05-18.html",
+    "2026-05-19.html",
+    "2026-05-20.html",
+    "2026-05-21.html",
+    "2026-05-22.html",
+    "2026-05-25.html",
+    "2026-05-26.html",
+    "2026-05-27.html",
+    "2026-05-28.html",
+    "2026-05-29.html"
+  ]
+}

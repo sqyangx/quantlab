@@ -1,0 +1,9 @@
+{
+  "analysis_dir": "quantlab/trading_strategy_release/data/tradingagents_modela_rerank_202606",
+  "portfolio_dir": "quantlab/trading_strategy_release/data/5min_modela_portfolio_backtest_202606",
+  "output_dir": "quantlab/trading_strategy_release/frontend/tradingagents_modela_ui_202606",
+  "pages": [
+    "index.html",
+    "2026-06-01.html"
+  ]
+}

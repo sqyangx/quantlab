@@ -73,7 +73,12 @@ def short_text(value: Any, limit: int = 72) -> str:
 
 
 def read_csv(path: Path) -> pd.DataFrame:
-    return pd.read_csv(path) if path.exists() else pd.DataFrame()
+    if not path.exists():
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(path)
+    except pd.errors.EmptyDataError:
+        return pd.DataFrame()
 
 
 def load_analysis(analysis_dir: Path) -> list[dict[str, Any]]:

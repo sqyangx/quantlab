@@ -8,6 +8,12 @@ It contains a standalone TradingAgents-style analyst module, static UI pages, an
 
 - `frontend/tradingagents_modela_ui_20260501_20260529/`
   - Static SmartStock AI UI for the May 2026 demo range.
+- `frontend/tradingagents_modela_ui_202606/`
+  - June 2026 after-close Model-A release UI. Rebuilt after each new close signal.
+- `data/tradingagents_modela_rerank_202606/`
+  - June 2026 TradingAgents secondary analysis JSON/CSV/Markdown.
+- `data/5min_modela_portfolio_backtest_202606/`
+  - June 2026 account tracking files for generated Model-A signals.
 - `src/quantlab/post_analysis/tradingagents/`
   - Standalone multi-agent analyst/reranking module.
   - It consumes a candidate pool and produces evidence-aware recommendations.
@@ -17,6 +23,24 @@ It contains a standalone TradingAgents-style analyst module, static UI pages, an
   - Internal helper for building daily JSON/Markdown/CSV outputs. Generated `daily_results_2026` is not part of the GitHub release.
 - `tools/build_tradingagents_ui.py`
   - Builds the static frontend from analysis and account outputs.
+
+## Daily After-Close Model-A Release
+
+Run this from the repository root after the 5-minute provider has the close data available:
+
+```bash
+/home/gpu/.conda/envs/asrlab/bin/python -u scripts/run_modela_daily_release_after_close.py \
+  --date YYYY-MM-DD \
+  --gpu 0
+```
+
+The command first runs the 5-minute first flow unless `--skip-first-flow` is passed, then writes monthly release artifacts:
+
+```text
+quantlab/trading_strategy_release/data/tradingagents_modela_rerank_YYYYMM/
+quantlab/trading_strategy_release/data/5min_modela_portfolio_backtest_YYYYMM/
+quantlab/trading_strategy_release/frontend/tradingagents_modela_ui_YYYYMM/
+```
 
 ## Excluded From Release
 

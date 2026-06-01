@@ -1,0 +1,516 @@
+{
+  "date": "2026-06-01",
+  "candidate_n": 7,
+  "final_n": 5,
+  "selection_stage": "upstream candidate pool unchanged",
+  "rerank_stage": "TradingAgents analyst module with financial/announcement/news/sentiment evidence",
+  "fetch_external": false,
+  "final_tickers": [
+    "SH603690",
+    "SZ002323",
+    "SH603316",
+    "SZ000677",
+    "SZ002428"
+  ],
+  "candidates": [
+    {
+      "date": "2026-06-01",
+      "ticker": "SH603690",
+      "name": "",
+      "candidate_rank": 2,
+      "model_a_score": 0.7771499156951904,
+      "scores": {
+        "quant_score": 0.7408380909884967,
+        "technical_score": 0.4858020852597811,
+        "fundamental_score": 0.5,
+        "event_sentiment_score": 0.0,
+        "bear_risk_score": 0.1795982649837003,
+        "final_score": 0.44737456022146616,
+        "decision": "候补观察",
+        "risk_level": "低",
+        "industry": "机械设备"
+      },
+      "technical_features": {
+        "day_return": -0.015650055716470046,
+        "last_hour_return": -0.012877251103096121,
+        "amplitude": 0.042023691433172194,
+        "amount": 452289728.0
+      },
+      "external_evidence": {
+        "ticker": "SH603690",
+        "name": "",
+        "financial": {},
+        "announcements": [],
+        "news": [],
+        "sentiment": {},
+        "errors": [
+          "external_fetch_disabled"
+        ]
+      },
+      "agent_report": {
+        "量化证据分析师": "Model-A 候选排序第 2，分数 0.777150。Kronos endpoint=0.6358%，不确定性=0.006030。量化分 0.741。",
+        "技术分析师": "15:00 前日内涨跌 -1.57%，最后一小时 -1.29%，成交额 4.52亿元。技术分 0.486。",
+        "基本面分析师": "行业为 机械设备。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。",
+        "事件解读分析师": "公告 0 条、新闻 0 条；正向命中 0、负向命中 0，事件分 0.000。暂未抓到可用公告或新闻，事件面不作为加分项。",
+        "看多研究员": "看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。",
+        "看空研究员": "反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.180。",
+        "交易员结论": "候补观察，最终分 0.447，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。",
+        "数据状态": "external_fetch_disabled"
+      },
+      "source_npz": "quantlab/04_kronos_5min/2026/pipeline_5min_kronos_2026_gpu0_20260527_145447/2026-06-01_150000.npz"
+    },
+    {
+      "date": "2026-06-01",
+      "ticker": "SZ002323",
+      "name": "",
+      "candidate_rank": 4,
+      "model_a_score": 0.7252031564712524,
+      "scores": {
+        "quant_score": 0.6751029489437739,
+        "technical_score": 0.5546562922261188,
+        "fundamental_score": 0.2322975,
+        "event_sentiment_score": 0.53125,
+        "bear_risk_score": 0.2734761884154086,
+        "final_score": 0.43166883407094536,
+        "decision": "候补观察",
+        "risk_level": "低",
+        "industry": "建筑装饰"
+      },
+      "technical_features": {
+        "day_return": 0.04054050135560283,
+        "last_hour_return": 0.0,
+        "amplitude": 0.06206890428250733,
+        "amount": 112934128.0
+      },
+      "external_evidence": {
+        "ticker": "SZ002323",
+        "name": "",
+        "financial": {
+          "code": "sz.002323",
+          "pubDate": "2026-04-29",
+          "statDate": "2026-03-31",
+          "roeAvg": "-0.056485",
+          "npMargin": "-0.649306",
+          "gpMargin": "0.106539",
+          "netProfit": "-11187553.360000",
+          "epsTTM": "-0.080255",
+          "MBRevenue": "",
+          "totalShare": "2120855142.00",
+          "liqaShare": "2120490942.00",
+          "source": "baostock_query_profit_data",
+          "report_year": 2026,
+          "report_quarter": 1,
+          "roe": "-0.056485",
+          "gross_margin": "0.106539",
+          "net_profit": "-11187553.360000",
+          "eps_ttm": "-0.080255"
+        },
+        "announcements": [
+          {
+            "title": "*ST雅博:关于控股股东、实际控制人拟变更暨股东权益变动的进展公告",
+            "date": "2026-05-29 00:00:00",
+            "columns": [
+              {
+                "column_code": "001002002005",
+                "column_name": "权益变动报告书"
+              },
+              {
+                "column_code": "001002007004004",
+                "column_name": "股东/实际控制人变更"
+              }
+            ],
+            "source": "eastmoney_announcement"
+          },
+          {
+            "title": "*ST雅博:关于延期披露详式权益变动报告书财务顾问核查意见的公告",
+            "date": "2026-05-29 00:00:00",
+            "columns": [
+              {
+                "column_code": "001003002001",
+                "column_name": "保荐/核查意见"
+              }
+            ],
+            "source": "eastmoney_announcement"
+          },
+          {
+            "title": "*ST雅博:简式权益变动报告书",
+            "date": "2026-05-29 00:00:00",
+            "columns": [
+              {
+                "column_code": "001002002005",
+                "column_name": "权益变动报告书"
+              }
+            ],
+            "source": "eastmoney_announcement"
+          },
+          {
+            "title": "*ST雅博:详式权益变动报告书",
+            "date": "2026-05-29 00:00:00",
+            "columns": [
+              {
+                "column_code": "001002002005",
+                "column_name": "权益变动报告书"
+              }
+            ],
+            "source": "eastmoney_announcement"
+          },
+          {
+            "title": "*ST雅博:关于股票交易异常波动的公告",
+            "date": "2026-05-28 00:00:00",
+            "columns": [
+              {
+                "column_code": "001002004007",
+                "column_name": "股票交易异常波动"
+              }
+            ],
+            "source": "eastmoney_announcement"
+          },
+          {
+            "title": "*ST雅博:关于控股股东筹划股权划转暨控股股东、实际控制人可能发生变更的提示公告",
+            "date": "2026-05-25 00:00:00",
+            "columns": [
+              {
+                "column_code": "001002007003005",
+                "column_name": "股权转让"
+              },
+              {
+                "column_code": "001002007004004",
+                "column_name": "股东/实际控制人变更"
+              }
+            ],
+            "source": "eastmoney_announcement"
+          },
+          {
+            "title": "*ST雅博:关于股票交易异常波动的公告",
+            "date": "2026-05-14 00:00:00",
+            "columns": [
+              {
+                "column_code": "001002004007",
+                "column_name": "股票交易异常波动"
+              }
+            ],
+            "source": "eastmoney_announcement"
+          },
+          {
+            "title": "*ST雅博:关于股票交易异常波动的公告",
+            "date": "2026-05-12 00:00:00",
+            "columns": [
+              {
+                "column_code": "001002004007",
+                "column_name": "股票交易异常波动"
+              }
+            ],
+            "source": "eastmoney_announcement"
+          }
+        ],
+        "news": [
+          {
+            "title": "5月<em>2</em>8日晚间重要公告 | <em>002323</em> 控制权易主",
+            "content": "今日看点 　　聚焦一：*ST雅博（<em>002323</em>）：控股股东拟变更为枣庄财金实控人拟变更为枣庄市财政局 　　近日，公司控股股东泉兴科技与枣庄市财金控股集团有限公司（以下简称“枣庄财金”）、山东财汇控股集团有限公司（以下简称“山东财汇”）分别签订《国有股份无偿划转协议》，将其持有的公司",
+            "date": "2026-05-28 23:43:00",
+            "source": "上海证券报",
+            "url": "http://finance.eastmoney.com/a/202605283753154686.html"
+          },
+          {
+            "title": "*ST雅博(<em>002323</em>)龙虎榜数据(<em>0</em>5-<em>2</em>7)",
+            "content": "交易所2026年5月27日公布的交易公开信息显示，*ST雅博因成为连续三个交易日内，涨幅偏离值累计达到12%的ST证券、*ST证券和未完成股改证券上榜。*ST雅博当日收报1.33元，涨跌幅4.72%，换手率10.91%，成交额3.08亿。异常期间5月25日至5月27日，期间涨幅15.65%",
+            "date": "2026-05-27 16:28:27",
+            "source": "东方财富Choice数据",
+            "url": "http://stock.eastmoney.com/a/202605273751321783.html"
+          },
+          {
+            "title": "一字涨停！<em>002323</em>，控股股东股权拟无偿划转",
+            "content": "*ST雅博（<em>002323</em>）将迎来控制权变更。 　　5月24日晚间，公司披露，控股股东山东泉兴科技有限公司拟将所持公司21.13%股份全部无偿划转。本次股权划转完成后，公司实控人将由枣庄市国资委变更为枣庄市财政局。",
+            "date": "2026-05-25 18:29:00",
+            "source": "上海证券报",
+            "url": "http://finance.eastmoney.com/a/202605253748307292.html"
+          },
+          {
+            "title": "*ST雅博：控股股东拟变更为枣庄财金 实控人将变更为枣庄市财政局",
+            "content": "*ST雅博(<em>002323</em>.SZ)公告称，公司控股股东泉兴科技与枣庄财金、山东财汇分别签订《国有股份无偿划转协议》，将其持有的公司21.1290%股份全部无偿划转。其中，17.1145%股份划转给枣庄财金，4.0145%股份划转给山东财汇。",
+            "date": "2026-05-28 20:21:13",
+            "source": "财联社",
+            "url": "http://finance.eastmoney.com/a/202605283752968686.html"
+          },
+          {
+            "title": "4<em>3</em>股每笔成交量增长超5<em>0</em>%",
+            "content": "5月27日每笔成交环比增幅居前个股 证券代码 证券简称 日涨跌(%) 每笔成交(股) 环比(%) 300291 百纳千成 20.04 2470 241.29 <em>002323</em> *ST雅博 4.72 15271 240.53 002484 江海股份 10.01 1406 177.34 605167",
+            "date": "2026-05-27 21:36:00",
+            "source": "证券时报网",
+            "url": "http://finance.eastmoney.com/a/202605273751600495.html"
+          },
+          {
+            "title": "*ST雅博：控股股东拟无偿划转<em>2</em>1.1<em>3</em>%公司股份给枣庄财金及山东财汇 可能导致公司实控人变更",
+            "content": "*ST雅博(<em>002323</em>.SZ)公告称，公司控股股东山东泉兴科技有限公司拟将其持有的公司21.13%股份无偿划转给枣庄市财金控股集团有限公司及山东财汇控股集团有限公司，各方已签署股权划转意向性协议。该事项可能导致公司控股股东、实际控制人发生变动。",
+            "date": "2026-05-24 21:59:57",
+            "source": "财联社",
+            "url": "http://finance.eastmoney.com/a/202605243747511390.html"
+          },
+          {
+            "title": "*ST雅博：控股股东筹划股权无偿划转 或致公司实控人变更",
+            "content": "人民财讯5月24日电，*ST雅博(<em>002323</em>)5月24日公告，公司控股股东山东泉兴科技有限公司拟将其持有的公司21.13%股份无偿划转给枣庄市财金控股集团有限公司（简称“枣庄财金”）及山东财汇控股集团有限公司，各方签署了股权划转意向性协议，该事项可能导致公司控股股东、实际控制人发生变动",
+            "date": "2026-05-24 22:10:00",
+            "source": "证券时报网",
+            "url": "http://finance.eastmoney.com/a/202605243747512885.html"
+          },
+          {
+            "title": "A股平均股价14.95元 55股股价不足<em>2</em>元",
+            "content": "1.35 0.75 0.66 0.58 轻工制造 600370 *ST三房 1.42 5.19 3.14 1.16 基础化工 002501 *ST利源 1.44 -2.04 1.05 31.87 有色金属 000656 *ST金科 1.46 2.10 1.42 3.76 房地产 <em>002323</em>",
+            "date": "2026-05-29 17:50:00",
+            "source": "证券时报网",
+            "url": "http://finance.eastmoney.com/a/202605293754560274.html"
+          }
+        ],
+        "sentiment": {
+          "score": 0.0625,
+          "positive_hits": 1,
+          "negative_hits": 0,
+          "sample_count": 16,
+          "method": "title_keyword_lexicon"
+        },
+        "errors": []
+      },
+      "agent_report": {
+        "量化证据分析师": "Model-A 候选排序第 4，分数 0.725203。Kronos endpoint=0.5086%，不确定性=0.009262。量化分 0.675。",
+        "技术分析师": "15:00 前日内涨跌 4.05%，最后一小时 0.00%，成交额 1.13亿元。技术分 0.555。",
+        "基本面分析师": "行业为 建筑装饰。ROE=-0.056485，毛利率=0.106539，净利润=-11187553.360000。基本面分 0.232。",
+        "事件解读分析师": "公告 8 条、新闻 8 条；正向命中 1、负向命中 0，事件分 0.531。存在股票交易异常波动提示，追涨风险需要单独扣分。",
+        "看多研究员": "看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。",
+        "看空研究员": "反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.273。",
+        "交易员结论": "候补观察，最终分 0.432，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。",
+        "数据状态": "外部证据已缓存"
+      },
+      "source_npz": "quantlab/04_kronos_5min/2026/pipeline_5min_kronos_2026_gpu0_20260527_145447/2026-06-01_150000.npz"
+    },
+    {
+      "date": "2026-06-01",
+      "ticker": "SH603316",
+      "name": "",
+      "candidate_rank": 6,
+      "model_a_score": 0.6946014761924744,
+      "scores": {
+        "quant_score": 0.609749109453211,
+        "technical_score": 0.5913114767601545,
+        "fundamental_score": 0.5,
+        "event_sentiment_score": 0.0,
+        "bear_risk_score": 0.17358725248763796,
+        "final_score": 0.42670698332806545,
+        "decision": "候补观察",
+        "risk_level": "低",
+        "industry": "建筑装饰"
+      },
+      "technical_features": {
+        "day_return": -0.03622187196346982,
+        "last_hour_return": -0.009425017062321683,
+        "amplitude": 0.07293668170030787,
+        "amount": 1088108416.0
+      },
+      "external_evidence": {
+        "ticker": "SH603316",
+        "name": "",
+        "financial": {},
+        "announcements": [],
+        "news": [],
+        "sentiment": {},
+        "errors": [
+          "external_fetch_disabled"
+        ]
+      },
+      "agent_report": {
+        "量化证据分析师": "Model-A 候选排序第 6，分数 0.694601。Kronos endpoint=0.3127%，不确定性=0.000781。量化分 0.610。",
+        "技术分析师": "15:00 前日内涨跌 -3.62%，最后一小时 -0.94%，成交额 10.88亿元。技术分 0.591。",
+        "基本面分析师": "行业为 建筑装饰。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。",
+        "事件解读分析师": "公告 0 条、新闻 0 条；正向命中 0、负向命中 0，事件分 0.000。暂未抓到可用公告或新闻，事件面不作为加分项。",
+        "看多研究员": "看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。",
+        "看空研究员": "反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.174。",
+        "交易员结论": "候补观察，最终分 0.427，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。",
+        "数据状态": "external_fetch_disabled"
+      },
+      "source_npz": "quantlab/04_kronos_5min/2026/pipeline_5min_kronos_2026_gpu0_20260527_145447/2026-06-01_150000.npz"
+    },
+    {
+      "date": "2026-06-01",
+      "ticker": "SZ000677",
+      "name": "",
+      "candidate_rank": 5,
+      "model_a_score": 0.7155922651290894,
+      "scores": {
+        "quant_score": 0.6621098608026903,
+        "technical_score": 0.5337880782836382,
+        "fundamental_score": 0.5,
+        "event_sentiment_score": 0.0,
+        "bear_risk_score": 0.3245709492692951,
+        "final_score": 0.4015544988231826,
+        "decision": "候补观察",
+        "risk_level": "低",
+        "industry": "纺织服饰"
+      },
+      "technical_features": {
+        "day_return": 0.060606002223795086,
+        "last_hour_return": -0.018691681453631315,
+        "amplitude": 0.09693880281762102,
+        "amount": 163720144.0
+      },
+      "external_evidence": {
+        "ticker": "SZ000677",
+        "name": "",
+        "financial": {},
+        "announcements": [],
+        "news": [],
+        "sentiment": {},
+        "errors": [
+          "external_fetch_disabled"
+        ]
+      },
+      "agent_report": {
+        "量化证据分析师": "Model-A 候选排序第 5，分数 0.715592。Kronos endpoint=0.9798%，不确定性=0.020054。量化分 0.662。",
+        "技术分析师": "15:00 前日内涨跌 6.06%，最后一小时 -1.87%，成交额 1.64亿元。技术分 0.534。",
+        "基本面分析师": "行业为 纺织服饰。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。",
+        "事件解读分析师": "公告 0 条、新闻 0 条；正向命中 0、负向命中 0，事件分 0.000。暂未抓到可用公告或新闻，事件面不作为加分项。",
+        "看多研究员": "看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。",
+        "看空研究员": "反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.325。",
+        "交易员结论": "候补观察，最终分 0.402，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。",
+        "数据状态": "external_fetch_disabled"
+      },
+      "source_npz": "quantlab/04_kronos_5min/2026/pipeline_5min_kronos_2026_gpu0_20260527_145447/2026-06-01_150000.npz"
+    },
+    {
+      "date": "2026-06-01",
+      "ticker": "SZ002428",
+      "name": "",
+      "candidate_rank": 1,
+      "model_a_score": 0.8595916628837585,
+      "scores": {
+        "quant_score": 0.6574489578604699,
+        "technical_score": 0.40953664360926767,
+        "fundamental_score": 0.5,
+        "event_sentiment_score": 0.0,
+        "bear_risk_score": 0.2550179356386938,
+        "final_score": 0.38396683216825456,
+        "decision": "候补观察",
+        "risk_level": "低",
+        "industry": "有色金属"
+      },
+      "technical_features": {
+        "day_return": -0.059699774090533175,
+        "last_hour_return": -0.0031584321816611194,
+        "amplitude": 0.08225688765321082,
+        "amount": 7904057344.0
+      },
+      "external_evidence": {
+        "ticker": "SZ002428",
+        "name": "",
+        "financial": {},
+        "announcements": [],
+        "news": [],
+        "sentiment": {},
+        "errors": [
+          "external_fetch_disabled"
+        ]
+      },
+      "agent_report": {
+        "量化证据分析师": "Model-A 候选排序第 1，分数 0.859592。Kronos endpoint=-3.2752%，不确定性=0.011685。量化分 0.657。",
+        "技术分析师": "15:00 前日内涨跌 -5.97%，最后一小时 -0.32%，成交额 79.04亿元。技术分 0.410。",
+        "基本面分析师": "行业为 有色金属。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。",
+        "事件解读分析师": "公告 0 条、新闻 0 条；正向命中 0、负向命中 0，事件分 0.000。暂未抓到可用公告或新闻，事件面不作为加分项。",
+        "看多研究员": "看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。",
+        "看空研究员": "反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.255。",
+        "交易员结论": "候补观察，最终分 0.384，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。",
+        "数据状态": "external_fetch_disabled"
+      },
+      "source_npz": "quantlab/04_kronos_5min/2026/pipeline_5min_kronos_2026_gpu0_20260527_145447/2026-06-01_150000.npz"
+    },
+    {
+      "date": "2026-06-01",
+      "ticker": "SH605006",
+      "name": "",
+      "candidate_rank": 3,
+      "model_a_score": 0.7321887016296387,
+      "scores": {
+        "quant_score": 0.644416945005457,
+        "technical_score": 0.4385096978082184,
+        "fundamental_score": 0.5,
+        "event_sentiment_score": 0.0,
+        "bear_risk_score": 0.37574706696163995,
+        "final_score": 0.36208301428360895,
+        "decision": "候补观察",
+        "risk_level": "中",
+        "industry": "建筑材料"
+      },
+      "technical_features": {
+        "day_return": -0.05229884295186982,
+        "last_hour_return": -0.007224613776269928,
+        "amplitude": 0.11461488270962406,
+        "amount": 1109788928.0
+      },
+      "external_evidence": {
+        "ticker": "SH605006",
+        "name": "",
+        "financial": {},
+        "announcements": [],
+        "news": [],
+        "sentiment": {},
+        "errors": [
+          "external_fetch_disabled"
+        ]
+      },
+      "agent_report": {
+        "量化证据分析师": "Model-A 候选排序第 3，分数 0.732189。Kronos endpoint=-1.2632%，不确定性=0.025244。量化分 0.644。",
+        "技术分析师": "15:00 前日内涨跌 -5.23%，最后一小时 -0.72%，成交额 11.10亿元。技术分 0.439。",
+        "基本面分析师": "行业为 建筑材料。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。",
+        "事件解读分析师": "公告 0 条、新闻 0 条；正向命中 0、负向命中 0，事件分 0.000。暂未抓到可用公告或新闻，事件面不作为加分项。",
+        "看多研究员": "看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。",
+        "看空研究员": "反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.376。",
+        "交易员结论": "候补观察，最终分 0.362，风险等级 中。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。",
+        "数据状态": "external_fetch_disabled"
+      },
+      "source_npz": "quantlab/04_kronos_5min/2026/pipeline_5min_kronos_2026_gpu0_20260527_145447/2026-06-01_150000.npz"
+    },
+    {
+      "date": "2026-06-01",
+      "ticker": "SZ002943",
+      "name": "",
+      "candidate_rank": 7,
+      "model_a_score": 0.6529029607772827,
+      "scores": {
+        "quant_score": 0.49405223066608134,
+        "technical_score": 0.3244122775510204,
+        "fundamental_score": 0.5,
+        "event_sentiment_score": 0.0,
+        "bear_risk_score": 0.25825168931777565,
+        "final_score": 0.30406741178847907,
+        "decision": "候补观察",
+        "risk_level": "低",
+        "industry": "机械设备"
+      },
+      "technical_features": {
+        "day_return": -0.09554452451330775,
+        "last_hour_return": 0.0,
+        "amplitude": 0.10563762075949046,
+        "amount": 801696128.0
+      },
+      "external_evidence": {
+        "ticker": "SZ002943",
+        "name": "",
+        "financial": {},
+        "announcements": [],
+        "news": [],
+        "sentiment": {},
+        "errors": [
+          "external_fetch_disabled"
+        ]
+      },
+      "agent_report": {
+        "量化证据分析师": "Model-A 候选排序第 7，分数 0.652903。Kronos endpoint=-2.1768%，不确定性=0.008882。量化分 0.494。",
+        "技术分析师": "15:00 前日内涨跌 -9.55%，最后一小时 0.00%，成交额 8.02亿元。技术分 0.324。",
+        "基本面分析师": "行业为 机械设备。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。",
+        "事件解读分析师": "公告 0 条、新闻 0 条；正向命中 0、负向命中 0，事件分 0.000。暂未抓到可用公告或新闻，事件面不作为加分项。",
+        "看多研究员": "看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。",
+        "看空研究员": "反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.258。",
+        "交易员结论": "候补观察，最终分 0.304，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。",
+        "数据状态": "external_fetch_disabled"
+      },
+      "source_npz": "quantlab/04_kronos_5min/2026/pipeline_5min_kronos_2026_gpu0_20260527_145447/2026-06-01_150000.npz"
+    }
+  ]
+}

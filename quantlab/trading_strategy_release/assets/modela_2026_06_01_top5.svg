@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="420" viewBox="0 0 920 420" role="img" aria-label="June 1 2026 Model-A top 5 signals">
+  <rect width="920" height="420" rx="22" fill="#f8fafc"/>
+  <rect x="24" y="24" width="872" height="372" rx="18" fill="#ffffff" stroke="#dbe3ec"/>
+  <text x="54" y="68" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#111827">2026-06-01 After-Close Top 5</text>
+  <text x="54" y="96" font-family="Arial, sans-serif" font-size="15" fill="#64748b">13 signal-day limit-up candidates removed before TradingAgents reranking</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="70" y="136" fill="#64748b">Rank</text>
+    <text x="142" y="136" fill="#64748b">Ticker</text>
+    <text x="280" y="136" fill="#64748b">Industry</text>
+    <text x="460" y="136" fill="#64748b">Final Score</text>
+    <text x="620" y="136" fill="#64748b">Score Bar</text>
+    <g>
+      <rect x="54" y="154" width="812" height="42" rx="10" fill="#f8fafc"/>
+      <text x="78" y="181" font-weight="700" fill="#111827">1</text>
+      <text x="142" y="181" font-weight="700" fill="#1d4ed8">SH603690</text>
+      <text x="280" y="181" fill="#334155">Machinery</text>
+      <text x="460" y="181" fill="#111827">0.4474</text>
+      <rect x="620" y="166" width="190" height="16" rx="8" fill="#e5e7eb"/>
+      <rect x="620" y="166" width="170" height="16" rx="8" fill="#2563eb"/>
+    </g>
+    <g>
+      <rect x="54" y="206" width="812" height="42" rx="10" fill="#ffffff"/>
+      <text x="78" y="233" font-weight="700" fill="#111827">2</text>
+      <text x="142" y="233" font-weight="700" fill="#1d4ed8">SZ002323</text>
+      <text x="280" y="233" fill="#334155">Construction</text>
+      <text x="460" y="233" fill="#111827">0.4317</text>
+      <rect x="620" y="218" width="190" height="16" rx="8" fill="#e5e7eb"/>
+      <rect x="620" y="218" width="164" height="16" rx="8" fill="#2563eb"/>
+    </g>
+    <g>
+      <rect x="54" y="258" width="812" height="42" rx="10" fill="#f8fafc"/>
+      <text x="78" y="285" font-weight="700" fill="#111827">3</text>
+      <text x="142" y="285" font-weight="700" fill="#1d4ed8">SH603316</text>
+      <text x="280" y="285" fill="#334155">Construction</text>
+      <text x="460" y="285" fill="#111827">0.4267</text>
+      <rect x="620" y="270" width="190" height="16" rx="8" fill="#e5e7eb"/>
+      <rect x="620" y="270" width="162" height="16" rx="8" fill="#2563eb"/>
+    </g>
+    <g>
+      <rect x="54" y="310" width="812" height="42" rx="10" fill="#ffffff"/>
+      <text x="78" y="337" font-weight="700" fill="#111827">4</text>
+      <text x="142" y="337" font-weight="700" fill="#1d4ed8">SZ000677</text>
+      <text x="280" y="337" fill="#334155">Textile</text>
+      <text x="460" y="337" fill="#111827">0.4016</text>
+      <rect x="620" y="322" width="190" height="16" rx="8" fill="#e5e7eb"/>
+      <rect x="620" y="322" width="153" height="16" rx="8" fill="#2563eb"/>
+    </g>
+    <g>
+      <rect x="54" y="362" width="812" height="42" rx="10" fill="#f8fafc"/>
+      <text x="78" y="389" font-weight="700" fill="#111827">5</text>
+      <text x="142" y="389" font-weight="700" fill="#1d4ed8">SZ002428</text>
+      <text x="280" y="389" fill="#334155">Non-ferrous</text>
+      <text x="460" y="389" fill="#111827">0.3840</text>
+      <rect x="620" y="374" width="190" height="16" rx="8" fill="#e5e7eb"/>
+      <rect x="620" y="374" width="146" height="16" rx="8" fill="#2563eb"/>
+    </g>
+  </g>
+</svg>

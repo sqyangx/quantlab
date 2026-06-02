@@ -1,15 +1,15 @@
 {
   "pipeline_dir": "quantlab/04_kronos_5min/2026/pipeline_5min_kronos_2026_gpu0_20260527_145447",
   "data_dir": "quantlab/02_data_5min/min_data",
-  "model_path": "quantlab/08_archive_tmp/embedding_ranker_day_gate_20260530_opt1/model_a_stock_ranker.pt",
+  "model_path": "quantlab/model_registry/model_a_5min_ranker_20260530/model_a_stock_ranker.pt",
   "start": "2026-06-01",
-  "end": "2026-06-01",
+  "end": "2026-06-02",
   "top_n": 5,
   "initial_capital": 100000.0,
   "roundtrip_cost_bps": 10.0,
   "hold_trading_days_after_entry": 1,
   "exit_time": "15:00:00",
-  "signal_days": 1,
+  "signal_days": 2,
   "entry_days": 0,
   "completed_trades": 0,
   "skipped_entries": 0,
@@ -17,6 +17,6 @@
   "end_nav": 100000.0,
   "total_return": 0.0,
   "max_drawdown": 0.0,
-  "daily_win_rate": null,
-  "daily_return_std": null
+  "daily_win_rate": 0.0,
+  "daily_return_std": NaN
 }

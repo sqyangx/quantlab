@@ -4,6 +4,7 @@
   "output_dir": "quantlab/trading_strategy_release/frontend/tradingagents_modela_ui_202606",
   "pages": [
     "index.html",
-    "2026-06-01.html"
+    "2026-06-01.html",
+    "2026-06-02.html"
   ]
 }

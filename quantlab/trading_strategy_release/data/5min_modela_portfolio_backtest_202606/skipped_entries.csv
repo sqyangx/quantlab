@@ -1,3 +1,4 @@
-entry_date,signal_time,reason,ticker,code_name,is_st,signal_close,entry_open,entry_open_ret
-2026-06-02,2026-06-01 15:00:00,entry_open_limit_up,SH603890,春秋电子,False,27.290000915527344,30.020000457763672,0.1000366233290606
-2026-06-02,2026-06-01 15:00:00,entry_open_limit_up,SH600759,ST洲际,True,2.9000000953674316,3.049999952316284,0.051724086902089406
+entry_date,signal_time,reason,ticker,code_name,is_st,signal_close,entry_open,entry_open_ret,open_positions
+2026-06-02,2026-06-01 15:00:00,entry_open_limit_up,SH603890,春秋电子,False,27.290000915527344,30.020000457763672,0.1000366233290606,
+2026-06-02,2026-06-01 15:00:00,entry_open_limit_up,SH600759,ST洲际,True,2.9000000953674316,3.049999952316284,0.051724086902089406,
+2026-06-03,2026-06-02 15:00:00,capital_occupied_by_open_positions,,,,,,,"SH601918,SZ002428,SH603690"

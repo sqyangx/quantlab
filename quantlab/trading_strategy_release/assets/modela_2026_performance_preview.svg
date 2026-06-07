@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Model-A 2026 production performance preview</title>
+  <desc id="desc">Static preview of the production Model-A 2026 performance dashboard with summary metrics and normalized NAV comparison.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="0.52" stop-color="#0b1830"/>
+      <stop offset="1" stop-color="#050912"/>
+    </linearGradient>
+    <linearGradient id="model" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#47f0a3"/>
+      <stop offset="1" stop-color="#b4ffd7"/>
+    </linearGradient>
+    <linearGradient id="sse" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#30d5ff"/>
+      <stop offset="1" stop-color="#9eeaff"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <g opacity="0.12">
+    <path d="M0 83H1200M0 166H1200M0 249H1200M0 332H1200M0 415H1200M0 498H1200M0 581H1200" stroke="#d9efff"/>
+    <path d="M100 0V675M200 0V675M300 0V675M400 0V675M500 0V675M600 0V675M700 0V675M800 0V675M900 0V675M1000 0V675M1100 0V675" stroke="#d9efff"/>
+  </g>
+  <text x="58" y="70" fill="#47f0a3" font-family="Arial, sans-serif" font-size="18" font-weight="700">PRODUCTION MODEL-A PERFORMANCE MATRIX</text>
+  <text x="58" y="132" fill="#eaf4ff" font-family="Arial, sans-serif" font-size="58" font-weight="800">Model-A 2026 NAV Curve</text>
+  <text x="58" y="170" fill="#93a8bf" font-family="Arial, sans-serif" font-size="20">T+1 09:35 entry, T+3 09:35 exit, skip_unbuyable limit-up handling</text>
+
+  <g transform="translate(58 210)">
+    <g>
+      <rect width="170" height="96" rx="8" fill="#0e1c30" stroke="#24486b"/>
+      <text x="18" y="30" fill="#93a8bf" font-family="Arial, sans-serif" font-size="15">Model-A return</text>
+      <text x="18" y="66" fill="#eaf4ff" font-family="Arial, sans-serif" font-size="31" font-weight="800">164.23%</text>
+    </g>
+    <g transform="translate(188 0)">
+      <rect width="170" height="96" rx="8" fill="#0e1c30" stroke="#24486b"/>
+      <text x="18" y="30" fill="#93a8bf" font-family="Arial, sans-serif" font-size="15">SSE return</text>
+      <text x="18" y="66" fill="#eaf4ff" font-family="Arial, sans-serif" font-size="31" font-weight="800">1.87%</text>
+    </g>
+    <g transform="translate(376 0)">
+      <rect width="170" height="96" rx="8" fill="#0e1c30" stroke="#24486b"/>
+      <text x="18" y="30" fill="#93a8bf" font-family="Arial, sans-serif" font-size="15">Relative NAV</text>
+      <text x="18" y="66" fill="#47f0a3" font-family="Arial, sans-serif" font-size="31" font-weight="800">2.59x</text>
+    </g>
+    <g transform="translate(564 0)">
+      <rect width="170" height="96" rx="8" fill="#0e1c30" stroke="#24486b"/>
+      <text x="18" y="30" fill="#93a8bf" font-family="Arial, sans-serif" font-size="15">Max drawdown</text>
+      <text x="18" y="66" fill="#eaf4ff" font-family="Arial, sans-serif" font-size="31" font-weight="800">-10.14%</text>
+    </g>
+    <g transform="translate(752 0)">
+      <rect width="170" height="96" rx="8" fill="#0e1c30" stroke="#24486b"/>
+      <text x="18" y="30" fill="#93a8bf" font-family="Arial, sans-serif" font-size="15">Signals</text>
+      <text x="18" y="66" fill="#eaf4ff" font-family="Arial, sans-serif" font-size="31" font-weight="800">46 / 91</text>
+    </g>
+    <g transform="translate(940 0)">
+      <rect width="170" height="96" rx="8" fill="#0e1c30" stroke="#24486b"/>
+      <text x="18" y="30" fill="#93a8bf" font-family="Arial, sans-serif" font-size="15">Group win rate</text>
+      <text x="18" y="66" fill="#eaf4ff" font-family="Arial, sans-serif" font-size="31" font-weight="800">71.74%</text>
+    </g>
+  </g>
+
+  <g transform="translate(58 340)" filter="url(#soft)">
+    <rect width="1084" height="260" rx="8" fill="#0c1728" stroke="#24486b"/>
+    <text x="28" y="44" fill="#eaf4ff" font-family="Arial, sans-serif" font-size="22" font-weight="700">Normalized NAV Comparison</text>
+    <text x="790" y="44" fill="#47f0a3" font-family="Arial, sans-serif" font-size="17">Model-A</text>
+    <line x1="865" y1="38" x2="940" y2="38" stroke="url(#model)" stroke-width="5"/>
+    <text x="960" y="44" fill="#30d5ff" font-family="Arial, sans-serif" font-size="17">SSE</text>
+    <line x1="1002" y1="38" x2="1060" y2="38" stroke="url(#sse)" stroke-width="5"/>
+    <g transform="translate(42 76)">
+      <path d="M0 154H990M0 104H990M0 54H990M0 4H990" stroke="#274260" stroke-width="1"/>
+      <path d="M0 154 C95 148 150 123 205 137 C278 161 320 90 392 76 C456 63 510 38 590 55 C664 64 705 4 760 18 C828 38 864 10 910 36 C946 58 972 25 990 0" fill="none" stroke="url(#model)" stroke-width="6" stroke-linecap="round"/>
+      <path d="M0 154 C130 142 210 145 300 139 C386 150 460 164 550 158 C642 151 720 145 800 141 C885 132 946 126 990 123" fill="none" stroke="url(#sse)" stroke-width="5" stroke-linecap="round"/>
+      <text x="0" y="194" fill="#93a8bf" font-family="Arial, sans-serif" font-size="14">2026-01-05</text>
+      <text x="884" y="194" fill="#93a8bf" font-family="Arial, sans-serif" font-size="14">2026-05-28</text>
+      <text x="938" y="12" fill="#47f0a3" font-family="Arial, sans-serif" font-size="16" font-weight="700">2.64</text>
+      <text x="940" y="134" fill="#30d5ff" font-family="Arial, sans-serif" font-size="16" font-weight="700">1.02</text>
+    </g>
+  </g>
+  <text x="58" y="640" fill="#70869f" font-family="Arial, sans-serif" font-size="16">Static preview of quantlab/trading_strategy_release/frontend/modela_2026_performance/index.html</text>
+</svg>

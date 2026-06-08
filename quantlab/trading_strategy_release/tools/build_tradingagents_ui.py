@@ -348,11 +348,10 @@ def top_pick_card(item: dict[str, Any]) -> str:
     rank = item.get("final_rank", "")
     return f"""
     <a class="top-pick-card" href="#{esc(ticker)}">
-      <span>推荐 #{esc(rank)}</span>
+      <span>#{esc(rank)}</span>
       <strong>{esc(name or ticker)}</strong>
-      <em>{esc(ticker if name else scores.get('industry', ''))}</em>
+      <em>{esc(ticker)}</em>
       <small>{esc(scores.get('industry', '未知行业'))} · 日内 {fmt_pct(tech.get('day_return'))}</small>
-      <b>{esc('重点关注')}</b>
     </a>
     """
 
@@ -497,10 +496,10 @@ def date_page(
           <span>{esc(date)}</span>
         </nav>
         <header class="hero compact">
-          <div>
+          <div class="release-summary">
             <span class="eyebrow">交易日 {esc(date)}</span>
-            <h1>今日推荐 Top5</h1>
-            <p>基于 Model-A 候选、15:00 前 5min 走势、公告新闻和风险线索形成的发布建议。每张卡片可直接跳到对应股票详情。</p>
+            <h1>{esc(date)} 推荐</h1>
+            <p>基于 Model-A 候选、15:00 前 5min 走势、公告新闻和风险线索形成发布建议。</p>
           </div>
           <div class="top-pick-grid">{top_cards}</div>
         </header>
@@ -760,7 +759,29 @@ a { color: inherit; text-decoration: none; }
   font-size: 12px;
   letter-spacing: 0;
 }
-.hero.compact { min-height: 250px; grid-template-columns: 360px minmax(0, 1fr); align-items: center; }
+.hero.compact {
+  min-height: 0;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: stretch;
+  padding: 22px;
+}
+.hero.compact .release-summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 18px;
+  align-items: end;
+}
+.hero.compact .eyebrow { grid-column: 1 / -1; }
+.hero.compact h1 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.1;
+}
+.hero.compact p {
+  margin: 0;
+  align-self: center;
+}
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -889,36 +910,52 @@ p { color: #bad0e8; line-height: 1.72; }
 .top-pick-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
   align-items: stretch;
 }
 .top-pick-card {
-  min-height: 168px;
-  padding: 18px;
+  min-height: 104px;
+  padding: 14px 16px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.025)),
     rgba(2,9,18,.50);
   display: grid;
-  align-content: start;
-  gap: 8px;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "rank name"
+    "rank code"
+    "rank meta";
+  gap: 4px 12px;
+  align-content: center;
   box-shadow: 0 16px 34px rgba(0,0,0,.22);
 }
-.top-pick-card span { color: var(--green); font-size: 13px; }
-.top-pick-card strong { color: var(--text); font-size: 26px; line-height: 1.12; }
-.top-pick-card em { color: var(--cyan); font-style: normal; font-size: 15px; }
-.top-pick-card small { color: var(--muted); line-height: 1.45; }
-.top-pick-card b {
-  justify-self: start;
-  margin-top: 4px;
-  padding: 5px 9px;
-  border-radius: 999px;
+.top-pick-card span {
+  grid-area: rank;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  align-self: center;
+  border-radius: 8px;
+  color: var(--green);
   background: rgba(123,247,196,.10);
   border: 1px solid rgba(123,247,196,.28);
-  color: var(--green);
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 700;
 }
+.top-pick-card strong {
+  grid-area: name;
+  color: var(--text);
+  font-size: 21px;
+  line-height: 1.12;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.top-pick-card em { grid-area: code; color: var(--cyan); font-style: normal; font-size: 14px; }
+.top-pick-card small { grid-area: meta; color: var(--muted); line-height: 1.35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mission-panel {
   border: 1px solid rgba(36,216,255,.28);
   border-radius: 8px;
@@ -1128,7 +1165,16 @@ body::after { box-shadow: inset 0 0 120px rgba(102,116,132,.16); }
   backdrop-filter: blur(18px);
 }
 .hero.compact {
-  grid-template-columns: 330px minmax(0, 1fr);
+  min-height: 0;
+  padding: 18px;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.hero.compact .release-summary {
+  grid-template-columns: auto 1fr;
+}
+.hero.compact h1 {
+  font-size: 28px;
 }
 .hero::before {
   background:
@@ -1239,10 +1285,9 @@ p { color: #4d5b6b; }
 .top-pick-card strong { color: #101820; }
 .top-pick-card em { color: #1f5da7; }
 .top-pick-card small { color: #667484; }
-.top-pick-card b {
-  background: #f4f7fa;
-  border-color: #dce4ec;
-  color: #1f5da7;
+.top-pick-card span {
+  background: #f7edf0;
+  border-color: #ead4d8;
 }
 th { color: #647183; background: #f2f5f8; }
 td { color: #17212c; }

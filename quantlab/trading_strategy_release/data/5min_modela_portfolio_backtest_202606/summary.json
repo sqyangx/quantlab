@@ -4,7 +4,7 @@
   "model_path": "quantlab/model_registry/model_a_5min_ranker_20260530/model_a_stock_ranker.pt",
   "stock_basic": "quantlab/08_archive_tmp/stock_basic/baostock_stock_basic_latest.csv",
   "start": "2026-06-01",
-  "end": "2026-06-05",
+  "end": "2026-06-08",
   "top_n": 5,
   "limit_up_mode": "skip_unbuyable",
   "limit_up_buffer": 0.002,
@@ -12,14 +12,14 @@
   "roundtrip_cost_bps": 10.0,
   "hold_trading_days_after_entry": 1,
   "exit_time": "15:00:00",
-  "signal_days": 5,
-  "entry_days": 3,
+  "signal_days": 6,
+  "entry_days": 4,
   "completed_trades": 6,
-  "skipped_entries": 5,
+  "skipped_entries": 6,
   "start_nav": 100000.0,
   "end_nav": 105050.9865700245,
   "total_return": 0.05050986570024496,
   "max_drawdown": -0.012446724491782857,
-  "daily_win_rate": 0.75,
-  "daily_return_std": 0.016666512836894666
+  "daily_win_rate": 0.6,
+  "daily_return_std": 0.015478211908196749
 }

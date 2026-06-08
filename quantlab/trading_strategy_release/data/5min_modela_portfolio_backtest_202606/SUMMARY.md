@@ -8,7 +8,7 @@
 - exit: `entry day + 1 trading day 15:00:00`
 - roundtrip_cost_bps: `10.0`
 - completed_trades: `6`
-- skipped_entries: `5`
+- skipped_entries: `6`
 - total_return: `0.050510`
 - max_drawdown: `-0.012447`
 

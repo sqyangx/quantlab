@@ -4,3 +4,4 @@ entry_date,signal_time,reason,ticker,code_name,is_st,signal_close,entry_open,ent
 2026-06-03,2026-06-02 15:00:00,capital_occupied_by_open_positions,,,,,,,"SH601918,SZ002428,SH603690"
 2026-06-04,2026-06-03 15:00:00,entry_open_limit_up,SH600187,*ST国中,True,1.5399999618530273,1.6200000047683716,0.05194808110195215,
 2026-06-04,2026-06-03 15:00:00,entry_open_limit_up,SH600180,*ST瑞茂,True,1.5499999523162842,1.6299999952316284,0.051612932500929354,
+2026-06-05,2026-06-04 15:00:00,capital_occupied_by_open_positions,,,,,,,"SH603330,SZ002119,SZ002856"

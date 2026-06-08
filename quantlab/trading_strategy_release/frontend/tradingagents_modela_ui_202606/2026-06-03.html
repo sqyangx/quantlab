@@ -106,7 +106,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 12px;
   letter-spacing: 0;
 }
-.hero.compact { min-height: 280px; grid-template-columns: minmax(0, 1fr) 430px; }
+.hero.compact { min-height: 250px; grid-template-columns: 360px minmax(0, 1fr); align-items: center; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -232,6 +232,39 @@ p { color: #bad0e8; line-height: 1.72; }
   box-shadow: inset 0 0 14px rgba(36,216,255,.06);
 }
 .mini-nav { display: flex; flex-wrap: wrap; gap: 10px; align-content: end; }
+.top-pick-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  align-items: stretch;
+}
+.top-pick-card {
+  min-height: 168px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.025)),
+    rgba(2,9,18,.50);
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  box-shadow: 0 16px 34px rgba(0,0,0,.22);
+}
+.top-pick-card span { color: var(--green); font-size: 13px; }
+.top-pick-card strong { color: var(--text); font-size: 26px; line-height: 1.12; }
+.top-pick-card em { color: var(--cyan); font-style: normal; font-size: 15px; }
+.top-pick-card small { color: var(--muted); line-height: 1.45; }
+.top-pick-card b {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(123,247,196,.10);
+  border: 1px solid rgba(123,247,196,.28);
+  color: var(--green);
+  font-size: 12px;
+}
 .mission-panel {
   border: 1px solid rgba(36,216,255,.28);
   border-radius: 8px;
@@ -274,7 +307,7 @@ tr:hover td { background: rgba(36,216,255,.035); }
 }
 .signal-stack span { color: var(--muted); font-size: 11px; }
 .signal-stack b { color: var(--green); font-weight: 700; }
-.score-orb {
+.score-orb, .recommend-orb {
   width: 118px;
   height: 118px;
   border-radius: 50%;
@@ -285,8 +318,8 @@ tr:hover td { background: rgba(36,216,255,.035); }
   background: radial-gradient(circle, rgba(36,216,255,.20), rgba(2,9,18,.58) 62%, rgba(123,247,196,.10));
   box-shadow: 0 0 44px rgba(36, 216, 255, 0.24), inset 0 0 24px rgba(123,247,196,.10);
 }
-.score-orb strong { font-size: 28px; color: var(--green); }
-.score-orb span { color: var(--muted); font-size: 12px; }
+.score-orb strong, .recommend-orb strong { font-size: 28px; color: var(--green); }
+.score-orb span, .recommend-orb span { color: var(--muted); font-size: 12px; padding: 0 10px; }
 .stock-grid, .evidence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 18px; }
 .agent-section { margin: 0 18px 18px; }
 .score-row { display: grid; grid-template-columns: 86px 1fr 56px; align-items: center; gap: 10px; margin: 14px 0; color: #cfdaea; }
@@ -317,13 +350,14 @@ ul { margin: 0; padding-left: 18px; color: #cbd8e8; line-height: 1.8; }
 @media (max-width: 1100px) {
   .hero, .hero.compact, .dashboard-grid, .stock-grid, .evidence-grid, .trade-strip, .stock-head { grid-template-columns: 1fr; }
   .metrics-grid, .days-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .top-pick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .agent-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
   .shell { width: min(100% - 24px, 1440px); padding-top: 14px; }
   .hero { padding: 24px; }
   h1 { font-size: 38px; }
-  .metrics-grid, .days-grid, .agent-grid { grid-template-columns: 1fr; }
+  .metrics-grid, .days-grid, .agent-grid, .top-pick-grid { grid-template-columns: 1fr; }
   .stock-head { align-items: flex-start; flex-direction: column; }
 }
 
@@ -439,6 +473,9 @@ body::after { box-shadow: inset 0 0 120px rgba(102,116,132,.16); }
   box-shadow: 0 16px 34px rgba(39, 51, 68, .12);
   backdrop-filter: blur(18px);
 }
+.hero.compact {
+  grid-template-columns: 330px minmax(0, 1fr);
+}
 .hero::before {
   background:
     linear-gradient(90deg, rgba(194,13,23,.32), transparent 20%, transparent 80%, rgba(47,95,181,.24)),
@@ -535,6 +572,24 @@ p { color: #4d5b6b; }
   border-color: #d7e3f0;
   box-shadow: none;
 }
+.top-pick-card {
+  background: #ffffff;
+  border-color: #d6dee7;
+  box-shadow: 0 12px 24px rgba(39, 51, 68, .11);
+}
+.top-pick-card:hover {
+  border-color: #c20d17;
+  box-shadow: 0 16px 32px rgba(194, 13, 23, .14);
+}
+.top-pick-card span { color: #b20b15; }
+.top-pick-card strong { color: #101820; }
+.top-pick-card em { color: #1f5da7; }
+.top-pick-card small { color: #667484; }
+.top-pick-card b {
+  background: #f4f7fa;
+  border-color: #dce4ec;
+  color: #1f5da7;
+}
 th { color: #647183; background: #f2f5f8; }
 td { color: #17212c; }
 tr:hover td { background: #f7f9fb; }
@@ -556,15 +611,15 @@ tr:hover td { background: #f7f9fb; }
 }
 .signal-stack span { color: #697789; }
 .signal-stack b { color: #b20b15; }
-.score-orb {
+.score-orb, .recommend-orb {
   width: 106px;
   height: 106px;
   background: #fff;
   border-color: #d91624;
   box-shadow: 0 14px 28px rgba(194,13,23,.16), inset 0 0 0 8px #f5f7fa;
 }
-.score-orb strong { color: #b20b15; }
-.score-orb span { color: #667484; }
+.score-orb strong, .recommend-orb strong { color: #b20b15; }
+.score-orb span, .recommend-orb span { color: #667484; }
 .meter { background: #e9eef4; box-shadow: none; }
 .meter i { box-shadow: none; }
 .score-row { color: #283746; }
@@ -583,6 +638,7 @@ ul { color: #344354; }
   .brand-mark { min-width: 170px; margin-bottom: 0; }
   .side-nav a { white-space: nowrap; }
   .days-grid { grid-template-columns: 1fr; }
+  .top-pick-grid { grid-template-columns: 1fr; }
 }
 
 </style>
@@ -605,18 +661,54 @@ ul { color: #344354; }
         <header class="hero compact">
           <div>
             <span class="eyebrow">交易日 2026-06-03</span>
-            <h1>TradingAgents 建议 Top5</h1>
-            <p>前置 Model-A 只生成 top20 候选，本页展示独立后处理模块的二次分析、证据和讨论结论。</p>
+            <h1>今日推荐 Top5</h1>
+            <p>基于 Model-A 候选、15:00 前 5min 走势、公告新闻和风险线索形成的发布建议。每张卡片可直接跳到对应股票详情。</p>
           </div>
-          <div class="mission-panel">
-            <div class="scanner"></div>
-            <span>ACTIVE WATCHLIST</span>
-            <div class="mini-nav"><a href="#SH603330">#1 SH603330</a>
-<a href="#SH600187">#2 SH600187</a>
-<a href="#SH600759">#3 SH600759</a>
-<a href="#SH600180">#4 SH600180</a>
-<a href="#SZ002119">#5 SZ002119</a></div>
-          </div>
+          <div class="top-pick-grid">
+    <a class="top-pick-card" href="#SH603330">
+      <span>推荐 #1</span>
+      <strong>天洋新材</strong>
+      <em>SH603330</em>
+      <small>橡胶和塑 · 日内 0.00%</small>
+      <b>重点关注</b>
+    </a>
+    
+
+    <a class="top-pick-card" href="#SH600187">
+      <span>推荐 #2</span>
+      <strong>*ST国中</strong>
+      <em>SH600187</em>
+      <small>公用事业 · 日内 0.00%</small>
+      <b>重点关注</b>
+    </a>
+    
+
+    <a class="top-pick-card" href="#SH600759">
+      <span>推荐 #3</span>
+      <strong>ST洲际</strong>
+      <em>SH600759</em>
+      <small>石油石化 · 日内 -6.56%</small>
+      <b>重点关注</b>
+    </a>
+    
+
+    <a class="top-pick-card" href="#SH600180">
+      <span>推荐 #4</span>
+      <strong>*ST瑞茂</strong>
+      <em>SH600180</em>
+      <small>商贸零售 · 日内 0.00%</small>
+      <b>重点关注</b>
+    </a>
+    
+
+    <a class="top-pick-card" href="#SZ002119">
+      <span>推荐 #5</span>
+      <strong>康强电子</strong>
+      <em>SZ002119</em>
+      <small>电子 · 日内 10.14%</small>
+      <b>重点关注</b>
+    </a>
+    </div>
         </header>
         <section class="trade-strip">
           <div>
@@ -669,63 +761,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SH603330">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #1</span>
-          <h2>SH603330</h2>
+          <span class="rank-chip">推荐 #1</span>
+          <h2>天洋新材 SH603330</h2>
           <p>橡胶和塑 · Model-A #2</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.878</b>
-          <span>TECH</span>
-          <b>0.471</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>0.00%</b>
+          <span>最后一小时</span>
+          <b>0.00%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.499</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#1</strong>
+          <span>天洋新材</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:87.8%"></i></div>
-      <b>0.878</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:47.1%"></i></div>
-      <b>0.471</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:50.0%"></i></div>
-      <b>0.500</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:0.0%"></i></div>
-      <b>0.000</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:14.9%"></i></div>
-      <b>0.149</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 0.00%，波动相对可控。</p>
+          <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>天洋新材</dd>
+            <dt>代码</dt><dd>SH603330</dd>
             <dt>日内涨跌</dt><dd>0.00%</dd>
             <dt>最后一小时</dt><dd>0.00%</dd>
             <dt>ROE</dt><dd>暂无</dd>
@@ -740,47 +801,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SH603330 是 Model-A 候选池中的第 2 名，二级分析最终分 0.499。量化分 0.878，技术分 0.471，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 0.00%，最后一小时为 0.00%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：暂无明确事件线索 情绪命中正向 0 次、负向 0 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 低。未看到必须单独剔除的重大负面标题，但仍需结合成交量和次日价格确认。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>天洋新材 SH603330 位于本日最终推荐第 1 位，行业归类为橡胶和塑。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 0.00%，波动相对可控。</p>
+      <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
+      <p>风险判断：低。暂未看到需要单独剔除的重大负面标题，但仍要看次日开盘承接。</p>
+      <p class="action-note">综合评估：天洋新材 SH603330 进入最终推荐 Top5，盘面和事件面没有形成单一否决项，按低风险候选跟踪。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 2，分数 1.362043。Kronos endpoint=2.5585%，不确定性=0.007331。量化分 0.878。</p>
+              <span>候选来源</span>
+              <p>天洋新材 SH603330 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 0.00%，最后一小时 0.00%，成交额 1.01亿元。技术分 0.471。</p>
+              <span>盘面观察</span>
+              <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 0.00%，波动相对可控。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 橡胶和塑。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。</p>
+              <span>事件观察</span>
+              <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为低。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.149。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.499，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：天洋新材 SH603330 进入最终推荐 Top5，盘面和事件面没有形成单一否决项，按低风险候选跟踪。</p>
             </article>
             </div>
       </section>
@@ -799,63 +854,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SH600187">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #2</span>
-          <h2>SH600187</h2>
+          <span class="rank-chip">推荐 #2</span>
+          <h2>*ST国中 SH600187</h2>
           <p>公用事业 · Model-A #1</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.863</b>
-          <span>TECH</span>
-          <b>0.456</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>0.00%</b>
+          <span>最后一小时</span>
+          <b>0.00%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.496</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#2</strong>
+          <span>*ST国中</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:86.3%"></i></div>
-      <b>0.863</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:45.6%"></i></div>
-      <b>0.456</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:31.0%"></i></div>
-      <b>0.310</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:56.2%"></i></div>
-      <b>0.562</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:26.6%"></i></div>
-      <b>0.266</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 0.65%，波动相对可控。</p>
+          <p>名称或公告中出现 ST，必须按高波动、高不确定性处理；近期多次出现交易异常波动公告，说明短线资金博弈强；有回购相关公告，对市场预期有一定支撑。代表性标题：*ST国中:2025年年度股东会会议资料。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>*ST国中</dd>
+            <dt>代码</dt><dd>SH600187</dd>
             <dt>日内涨跌</dt><dd>0.00%</dd>
             <dt>最后一小时</dt><dd>0.00%</dd>
             <dt>ROE</dt><dd>0.005902</dd>
@@ -870,47 +894,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SH600187 是 Model-A 候选池中的第 1 名，二级分析最终分 0.496。量化分 0.863，技术分 0.456，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 0.00%，最后一小时为 0.00%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：公告以公司治理和股东会议事项为主，对短线交易更多是信息披露背景。 情绪命中正向 2 次、负向 0 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 低。该股标题中出现 ST 相关信息，必须按高波动和高不确定性处理。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>*ST国中 SH600187 位于本日最终推荐第 2 位，行业归类为公用事业。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 0.65%，波动相对可控。</p>
+      <p>名称或公告中出现 ST，必须按高波动、高不确定性处理；近期多次出现交易异常波动公告，说明短线资金博弈强；有回购相关公告，对市场预期有一定支撑。代表性标题：*ST国中:2025年年度股东会会议资料。</p>
+      <p>风险判断：低。名称或公告中带有 ST/异常波动线索，隔日买入需要优先考虑能否成交和回撤控制。</p>
+      <p class="action-note">综合评估：*ST国中 SH600187 虽进入推荐序列，但 ST 属性和异常波动公告会放大隔日买入风险，只适合小仓位观察，不能按普通强势股处理。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 1，分数 1.421123。Kronos endpoint=1.0559%，不确定性=0.018262。量化分 0.863。</p>
+              <span>候选来源</span>
+              <p>*ST国中 SH600187 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 0.00%，最后一小时 0.00%，成交额 0.70亿元。技术分 0.456。</p>
+              <span>盘面观察</span>
+              <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 0.65%，波动相对可控。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 公用事业。ROE=0.005902，毛利率=0.124432，净利润=15886004.510000。基本面分 0.310。</p>
+              <span>事件观察</span>
+              <p>名称或公告中出现 ST，必须按高波动、高不确定性处理；近期多次出现交易异常波动公告，说明短线资金博弈强；有回购相关公告，对市场预期有一定支撑。代表性标题：*ST国中:2025年年度股东会会议资料。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为低。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.266。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.496，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：*ST国中 SH600187 虽进入推荐序列，但 ST 属性和异常波动公告会放大隔日买入风险，只适合小仓位观察，不能按普通强势股处理。</p>
             </article>
             </div>
       </section>
@@ -933,63 +951,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SH600759">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #3</span>
-          <h2>SH600759</h2>
+          <span class="rank-chip">推荐 #3</span>
+          <h2>ST洲际 SH600759</h2>
           <p>石油石化 · Model-A #8</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.529</b>
-          <span>TECH</span>
-          <b>0.483</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>-6.56%</b>
+          <span>最后一小时</span>
+          <b>1.36%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.457</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#3</strong>
+          <span>ST洲际</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:52.9%"></i></div>
-      <b>0.529</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:48.3%"></i></div>
-      <b>0.483</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:71.2%"></i></div>
-      <b>0.712</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:43.8%"></i></div>
-      <b>0.438</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:22.1%"></i></div>
-      <b>0.221</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天下跌 -6.56%，需要防止弱势延续；最后一小时继续上涨 1.36%，尾盘资金仍有承接；日内振幅 10.34%，波动很大。</p>
+          <p>名称或公告中出现 ST，必须按高波动、高不确定性处理；近期多次出现交易异常波动公告，说明短线资金博弈强。代表性标题：ST洲际:洲际油气股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>ST洲际</dd>
+            <dt>代码</dt><dd>SH600759</dd>
             <dt>日内涨跌</dt><dd>-6.56%</dd>
             <dt>最后一小时</dt><dd>1.36%</dd>
             <dt>ROE</dt><dd>0.012497</dd>
@@ -1004,47 +991,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SH600759 是 Model-A 候选池中的第 8 名，二级分析最终分 0.457。量化分 0.529，技术分 0.483，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 -6.56%，最后一小时为 1.36%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：出现交易异常波动相关公告，短期价格波动风险较高。 情绪命中正向 0 次、负向 2 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 低。该股标题中出现 ST 相关信息，必须按高波动和高不确定性处理。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>ST洲际 SH600759 位于本日最终推荐第 3 位，行业归类为石油石化。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天下跌 -6.56%，需要防止弱势延续；最后一小时继续上涨 1.36%，尾盘资金仍有承接；日内振幅 10.34%，波动很大。</p>
+      <p>名称或公告中出现 ST，必须按高波动、高不确定性处理；近期多次出现交易异常波动公告，说明短线资金博弈强。代表性标题：ST洲际:洲际油气股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告。</p>
+      <p>风险判断：低。名称或公告中带有 ST/异常波动线索，隔日买入需要优先考虑能否成交和回撤控制。</p>
+      <p class="action-note">综合评估：ST洲际 SH600759 虽进入推荐序列，但 ST 属性和异常波动公告会放大隔日买入风险，只适合小仓位观察，不能按普通强势股处理。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 8，分数 0.932758。Kronos endpoint=-1.3615%，不确定性=0.007097。量化分 0.529。</p>
+              <span>候选来源</span>
+              <p>ST洲际 SH600759 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 -6.56%，最后一小时 1.36%，成交额 18.51亿元。技术分 0.483。</p>
+              <span>盘面观察</span>
+              <p>信号日全天下跌 -6.56%，需要防止弱势延续；最后一小时继续上涨 1.36%，尾盘资金仍有承接；日内振幅 10.34%，波动很大。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 石油石化。ROE=0.012497，毛利率=0.648449，净利润=127090284.640000。基本面分 0.712。</p>
+              <span>事件观察</span>
+              <p>名称或公告中出现 ST，必须按高波动、高不确定性处理；近期多次出现交易异常波动公告，说明短线资金博弈强。代表性标题：ST洲际:洲际油气股份有限公司关于公司股票被实施其他风险警示相关事项的进展公告。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为低。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.221。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.457，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：ST洲际 SH600759 虽进入推荐序列，但 ST 属性和异常波动公告会放大隔日买入风险，只适合小仓位观察，不能按普通强势股处理。</p>
             </article>
             </div>
       </section>
@@ -1067,63 +1048,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SH600180">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #4</span>
-          <h2>SH600180</h2>
+          <span class="rank-chip">推荐 #4</span>
+          <h2>*ST瑞茂 SH600180</h2>
           <p>商贸零售 · Model-A #3</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.800</b>
-          <span>TECH</span>
-          <b>0.460</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>0.00%</b>
+          <span>最后一小时</span>
+          <b>0.00%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.432</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#4</strong>
+          <span>*ST瑞茂</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:80.0%"></i></div>
-      <b>0.800</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:46.0%"></i></div>
-      <b>0.460</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:13.2%"></i></div>
-      <b>0.132</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:46.9%"></i></div>
-      <b>0.469</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:24.4%"></i></div>
-      <b>0.244</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 6.16%，波动中等偏高。</p>
+          <p>名称或公告中出现 ST，必须按高波动、高不确定性处理；近期多次出现交易异常波动公告，说明短线资金博弈强。代表性标题：*ST瑞茂:关于公司及子公司诉讼进展的公告。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>*ST瑞茂</dd>
+            <dt>代码</dt><dd>SH600180</dd>
             <dt>日内涨跌</dt><dd>0.00%</dd>
             <dt>最后一小时</dt><dd>0.00%</dd>
             <dt>ROE</dt><dd>-0.067631</dd>
@@ -1138,47 +1088,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SH600180 是 Model-A 候选池中的第 3 名，二级分析最终分 0.432。量化分 0.800，技术分 0.460，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 0.00%，最后一小时为 0.00%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：出现交易异常波动相关公告，短期价格波动风险较高。 情绪命中正向 0 次、负向 1 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 低。该股标题中出现 ST 相关信息，必须按高波动和高不确定性处理。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>*ST瑞茂 SH600180 位于本日最终推荐第 4 位，行业归类为商贸零售。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 6.16%，波动中等偏高。</p>
+      <p>名称或公告中出现 ST，必须按高波动、高不确定性处理；近期多次出现交易异常波动公告，说明短线资金博弈强。代表性标题：*ST瑞茂:关于公司及子公司诉讼进展的公告。</p>
+      <p>风险判断：低。名称或公告中带有 ST/异常波动线索，隔日买入需要优先考虑能否成交和回撤控制。</p>
+      <p class="action-note">综合评估：*ST瑞茂 SH600180 虽进入推荐序列，但 ST 属性和异常波动公告会放大隔日买入风险，只适合小仓位观察，不能按普通强势股处理。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 3，分数 1.264585。Kronos endpoint=1.4208%，不确定性=0.000555。量化分 0.800。</p>
+              <span>候选来源</span>
+              <p>*ST瑞茂 SH600180 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 0.00%，最后一小时 0.00%，成交额 1.21亿元。技术分 0.460。</p>
+              <span>盘面观察</span>
+              <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 6.16%，波动中等偏高。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 商贸零售。ROE=-0.067631，毛利率=-0.038387，净利润=-303548598.410000。基本面分 0.132。</p>
+              <span>事件观察</span>
+              <p>名称或公告中出现 ST，必须按高波动、高不确定性处理；近期多次出现交易异常波动公告，说明短线资金博弈强。代表性标题：*ST瑞茂:关于公司及子公司诉讼进展的公告。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为低。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.244。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.432，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：*ST瑞茂 SH600180 虽进入推荐序列，但 ST 属性和异常波动公告会放大隔日买入风险，只适合小仓位观察，不能按普通强势股处理。</p>
             </article>
             </div>
       </section>
@@ -1201,63 +1145,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SZ002119">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #5</span>
-          <h2>SZ002119</h2>
+          <span class="rank-chip">推荐 #5</span>
+          <h2>康强电子 SZ002119</h2>
           <p>电子 · Model-A #4</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.632</b>
-          <span>TECH</span>
-          <b>0.724</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>10.14%</b>
+          <span>最后一小时</span>
+          <b>-0.04%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.421</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#5</strong>
+          <span>康强电子</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:63.2%"></i></div>
-      <b>0.632</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:72.4%"></i></div>
-      <b>0.724</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:50.0%"></i></div>
-      <b>0.500</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:0.0%"></i></div>
-      <b>0.000</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:39.9%"></i></div>
-      <b>0.399</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天涨幅 10.14%，属于明显走强；最后一小时小幅回落 -0.04%，尾盘动能一般；日内振幅 10.59%，波动很大。</p>
+          <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>康强电子</dd>
+            <dt>代码</dt><dd>SZ002119</dd>
             <dt>日内涨跌</dt><dd>10.14%</dd>
             <dt>最后一小时</dt><dd>-0.04%</dd>
             <dt>ROE</dt><dd>暂无</dd>
@@ -1272,47 +1185,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SZ002119 是 Model-A 候选池中的第 4 名，二级分析最终分 0.421。量化分 0.632，技术分 0.724，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 10.14%，最后一小时为 -0.04%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：暂无明确事件线索 情绪命中正向 0 次、负向 0 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 中。未看到必须单独剔除的重大负面标题，但仍需结合成交量和次日价格确认。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>康强电子 SZ002119 位于本日最终推荐第 5 位，行业归类为电子。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天涨幅 10.14%，属于明显走强；最后一小时小幅回落 -0.04%，尾盘动能一般；日内振幅 10.59%，波动很大。</p>
+      <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
+      <p>风险判断：中。暂未看到需要单独剔除的重大负面标题，但仍要看次日开盘承接。</p>
+      <p class="action-note">综合评估：康强电子 SZ002119 当天已经明显走强，后续重点看次日开盘能否继续承接；若开盘直接高位失速，应降低追入优先级。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 4，分数 1.243456。Kronos endpoint=-2.7363%，不确定性=0.041494。量化分 0.632。</p>
+              <span>候选来源</span>
+              <p>康强电子 SZ002119 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 10.14%，最后一小时 -0.04%，成交额 11.12亿元。技术分 0.724。</p>
+              <span>盘面观察</span>
+              <p>信号日全天涨幅 10.14%，属于明显走强；最后一小时小幅回落 -0.04%，尾盘动能一般；日内振幅 10.59%，波动很大。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 电子。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。</p>
+              <span>事件观察</span>
+              <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为中。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.399。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.421，风险等级 中。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：康强电子 SZ002119 当天已经明显走强，后续重点看次日开盘能否继续承接；若开盘直接高位失速，应降低追入优先级。</p>
             </article>
             </div>
       </section>

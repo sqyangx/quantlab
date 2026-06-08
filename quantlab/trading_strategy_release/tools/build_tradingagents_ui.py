@@ -17,6 +17,8 @@ import pandas as pd
 DEFAULT_ANALYSIS_DIR = "quantlab/07_stock_selection_strategies/tradingagents_modela_rerank_20260525_20260529_fetch_baostock"
 DEFAULT_PORTFOLIO_DIR = "quantlab/07_stock_selection_strategies/5min_modela_portfolio_backtest_20260525_20260529"
 DEFAULT_OUTPUT_DIR = "quantlab/07_stock_selection_strategies/tradingagents_modela_ui_20260525_20260529"
+DEFAULT_STOCK_BASIC = "quantlab/08_archive_tmp/stock_basic/baostock_stock_basic_latest.csv"
+STOCK_NAME_MAP: dict[str, str] = {}
 
 
 def parse_args() -> argparse.Namespace:
@@ -25,6 +27,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--portfolio-dir", default=DEFAULT_PORTFOLIO_DIR)
     parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--title", default="Model-A × TradingAgents 5min 选股分析")
+    parser.add_argument("--stock-basic", default=DEFAULT_STOCK_BASIC)
     return parser.parse_args()
 
 
@@ -88,6 +91,21 @@ def load_analysis(analysis_dir: Path) -> list[dict[str, Any]]:
     return payloads
 
 
+def load_stock_names(path: Path) -> dict[str, str]:
+    if not path.exists():
+        return {}
+    df = read_csv(path)
+    if df.empty or "ticker" not in df.columns or "code_name" not in df.columns:
+        return {}
+    out = {}
+    for row in df[["ticker", "code_name"]].dropna().itertuples(index=False):
+        ticker = str(row.ticker).upper()
+        name = clean_text(row.code_name)
+        if ticker and name:
+            out[ticker] = name
+    return out
+
+
 def top_items(payload: dict[str, Any]) -> list[dict[str, Any]]:
     return list(payload.get("candidates", []))[: int(payload.get("final_n", 5))]
 
@@ -146,36 +164,140 @@ def event_theme(items: list[dict[str, Any]]) -> str:
     return "事件信息以常规公告和媒体报道为主，需结合价格行为确认。"
 
 
+def stock_name(item: dict[str, Any]) -> str:
+    name = clean_text(item.get("name"))
+    if name:
+        return name
+    ticker = str(item.get("ticker", "")).upper()
+    if ticker in STOCK_NAME_MAP:
+        return STOCK_NAME_MAP[ticker]
+    ev = item.get("external_evidence", {}) or {}
+    name = clean_text(ev.get("name"))
+    if name:
+        return name
+    for row in [*(ev.get("announcements") or []), *(ev.get("news") or [])]:
+        title = clean_text(row.get("title"))
+        if not title:
+            continue
+        match = re.match(r"^([^:：(<（]+)", title)
+        if match:
+            candidate = match.group(1).strip()
+            if candidate and not candidate.upper().startswith(ticker):
+                return candidate
+    return ""
+
+
+def stock_label(item: dict[str, Any]) -> str:
+    name = stock_name(item)
+    ticker = str(item.get("ticker", ""))
+    return f"{name} {ticker}" if name else ticker
+
+
+def trend_sentence(day_return: Any, last_hour_return: Any, amplitude: Any) -> str:
+    try:
+        day = float(day_return)
+    except Exception:
+        day = float("nan")
+    try:
+        last_hour = float(last_hour_return)
+    except Exception:
+        last_hour = float("nan")
+    try:
+        amp = float(amplitude)
+    except Exception:
+        amp = float("nan")
+
+    parts = []
+    if math.isfinite(day):
+        if day >= 0.03:
+            parts.append(f"信号日全天涨幅 {fmt_pct(day)}，属于明显走强")
+        elif day >= 0.01:
+            parts.append(f"信号日全天上涨 {fmt_pct(day)}，短线表现偏强")
+        elif day <= -0.02:
+            parts.append(f"信号日全天下跌 {fmt_pct(day)}，需要防止弱势延续")
+        else:
+            parts.append(f"信号日全天涨跌 {fmt_pct(day)}，价格表现相对温和")
+    if math.isfinite(last_hour):
+        if last_hour >= 0.01:
+            parts.append(f"最后一小时继续上涨 {fmt_pct(last_hour)}，尾盘资金仍有承接")
+        elif last_hour <= -0.01:
+            parts.append(f"最后一小时回落 {fmt_pct(last_hour)}，追高意愿不足")
+        elif last_hour > 0:
+            parts.append(f"最后一小时小幅上涨 {fmt_pct(last_hour)}，尾盘没有明显转弱")
+        else:
+            parts.append(f"最后一小时小幅回落 {fmt_pct(last_hour)}，尾盘动能一般")
+    if math.isfinite(amp):
+        if amp >= 0.08:
+            parts.append(f"日内振幅 {fmt_pct(amp)}，波动很大")
+        elif amp >= 0.04:
+            parts.append(f"日内振幅 {fmt_pct(amp)}，波动中等偏高")
+        else:
+            parts.append(f"日内振幅 {fmt_pct(amp)}，波动相对可控")
+    return "；".join(parts) + "。" if parts else "信号日价格数据不足，需要等待后续行情确认。"
+
+
+def event_sentence(item: dict[str, Any]) -> str:
+    ev = item.get("external_evidence", {}) or {}
+    announcements = ev.get("announcements") or []
+    news = ev.get("news") or []
+    titles = [clean_text(x.get("title")) for x in [*announcements, *news] if clean_text(x.get("title"))]
+    if not titles:
+        return "未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。"
+    joined = "；".join(titles[:8])
+    facts = []
+    if "ST" in joined.upper():
+        facts.append("名称或公告中出现 ST，必须按高波动、高不确定性处理")
+    if "异常波动" in joined:
+        facts.append("近期多次出现交易异常波动公告，说明短线资金博弈强")
+    if "龙虎榜" in joined:
+        facts.append("有龙虎榜线索，短线资金参与度较高")
+    if "回购" in joined:
+        facts.append("有回购相关公告，对市场预期有一定支撑")
+    if "专利" in joined or "中标" in joined or "订单" in joined or "合作" in joined:
+        facts.append("有业务或技术进展线索，可作为基本面背景")
+    if "减持" in joined:
+        facts.append("存在减持线索，需要压低事件面判断")
+    if not facts:
+        facts.append(event_theme([*announcements, *news]))
+    sample = short_text(titles[0], 52)
+    return f"{'；'.join(facts)}。代表性标题：{sample}。"
+
+
+def action_sentence(item: dict[str, Any]) -> str:
+    scores = item.get("scores", {}) or {}
+    tech = item.get("technical_features", {}) or {}
+    name = stock_label(item)
+    risk = scores.get("risk_level", "未知")
+    try:
+        day = float(tech.get("day_return"))
+    except Exception:
+        day = float("nan")
+    risk_clause = "低风险" if risk == "低" else ("中等风险" if risk == "中" else "高风险")
+    if "ST" in name.upper():
+        return f"综合评估：{name} 虽进入推荐序列，但 ST 属性和异常波动公告会放大隔日买入风险，只适合小仓位观察，不能按普通强势股处理。"
+    if math.isfinite(day) and day >= 0.03:
+        return f"综合评估：{name} 当天已经明显走强，后续重点看次日开盘能否继续承接；若开盘直接高位失速，应降低追入优先级。"
+    if math.isfinite(day) and day <= -0.02:
+        return f"综合评估：{name} 排名靠前但当天走势偏弱，适合等次日修复确认后再考虑，不能只凭模型排序追买。"
+    return f"综合评估：{name} 进入最终推荐 Top5，盘面和事件面没有形成单一否决项，按{risk_clause}候选跟踪。"
+
+
 def human_readable_analysis(item: dict[str, Any]) -> dict[str, Any]:
     scores = item.get("scores", {})
     ev = item.get("external_evidence", {})
     tech = item.get("technical_features", {})
-    sentiment = ev.get("sentiment") or {}
-    announcements = ev.get("announcements") or []
-    news = ev.get("news") or []
-    ticker = item.get("ticker", "")
-    rank = item.get("candidate_rank", "")
     risk = scores.get("risk_level", "未知")
-    final_score = fmt_num(scores.get("final_score"))
-    quant_score = fmt_num(scores.get("quant_score"))
-    tech_score = fmt_num(scores.get("technical_score"))
-    day_ret = fmt_pct(tech.get("day_return"))
-    last_hour = fmt_pct(tech.get("last_hour_return"))
-    pos = sentiment.get("positive_hits", 0)
-    neg = sentiment.get("negative_hits", 0)
-    event_line = event_theme([*announcements, *news])
-    st_flag = any("ST" in clean_text(x.get("title")).upper() for x in [*announcements, *news])
-    risk_note = "该股标题中出现 ST 相关信息，必须按高波动和高不确定性处理。" if st_flag else "未看到必须单独剔除的重大负面标题，但仍需结合成交量和次日价格确认。"
-    conclusion = (
-        f"{ticker} 是 Model-A 候选池中的第 {rank} 名，二级分析最终分 {final_score}。"
-        f"量化分 {quant_score}，技术分 {tech_score}，说明它主要是由模型信号和盘面行为共同推上来。"
-    )
+    label = stock_label(item)
+    industry = scores.get("industry", "未知行业")
+    final_rank = item.get("final_rank", "")
+    st_flag = "ST" in label.upper() or "ST" in event_sentence(item).upper()
+    risk_note = "名称或公告中带有 ST/异常波动线索，隔日买入需要优先考虑能否成交和回撤控制。" if st_flag else "暂未看到需要单独剔除的重大负面标题，但仍要看次日开盘承接。"
     return {
-        "summary": conclusion,
-        "market": f"信号日下午收盘前日内表现为 {day_ret}，最后一小时为 {last_hour}。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。",
-        "event": f"公告和新闻的可读结论：{event_line} 情绪命中正向 {pos} 次、负向 {neg} 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。",
-        "risk": f"风险等级为 {risk}。{risk_note}",
-        "action": "发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。",
+        "summary": f"{label} 位于本日最终推荐第 {final_rank} 位，行业归类为{industry}。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。",
+        "market": trend_sentence(tech.get("day_return"), tech.get("last_hour_return"), tech.get("amplitude")),
+        "event": event_sentence(item),
+        "risk": f"风险判断：{risk}。{risk_note}",
+        "action": action_sentence(item),
     }
 
 
@@ -193,14 +315,20 @@ def human_analysis_panel(item: dict[str, Any]) -> str:
     """
 
 
-def agent_grid(report: dict[str, str]) -> str:
-    preferred = ["量化证据分析师", "技术分析师", "基本面分析师", "看多研究员", "看空研究员", "交易员结论"]
-    cards = []
-    for role in preferred:
-        text = report.get(role)
-        if not text:
-            continue
-        cards.append(
+def agent_grid(item: dict[str, Any]) -> str:
+    scores = item.get("scores", {}) or {}
+    tech = item.get("technical_features", {}) or {}
+    label = stock_label(item)
+    cards = [
+        ("候选来源", f"{label} 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。"),
+        ("盘面观察", trend_sentence(tech.get("day_return"), tech.get("last_hour_return"), tech.get("amplitude"))),
+        ("事件观察", event_sentence(item)),
+        ("风险提示", f"当前风险归类为{scores.get('risk_level', '未知')}。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。"),
+        ("交易关注", action_sentence(item)),
+    ]
+    html_cards = []
+    for role, text in cards:
+        html_cards.append(
             f"""
             <article class="agent-card">
               <span>{esc(role)}</span>
@@ -208,7 +336,25 @@ def agent_grid(report: dict[str, str]) -> str:
             </article>
             """
         )
-    return "\n".join(cards)
+    return "\n".join(html_cards)
+
+
+def top_pick_card(item: dict[str, Any]) -> str:
+    tech = item.get("technical_features", {}) or {}
+    scores = item.get("scores", {}) or {}
+    ticker = str(item.get("ticker", ""))
+    name = stock_name(item)
+    label = stock_label(item)
+    rank = item.get("final_rank", "")
+    return f"""
+    <a class="top-pick-card" href="#{esc(ticker)}">
+      <span>推荐 #{esc(rank)}</span>
+      <strong>{esc(name or ticker)}</strong>
+      <em>{esc(ticker if name else scores.get('industry', ''))}</em>
+      <small>{esc(scores.get('industry', '未知行业'))} · 日内 {fmt_pct(tech.get('day_return'))}</small>
+      <b>{esc('重点关注')}</b>
+    </a>
+    """
 
 
 def stock_panel(item: dict[str, Any]) -> str:
@@ -221,37 +367,38 @@ def stock_panel(item: dict[str, Any]) -> str:
     news = ev.get("news") or []
     ticker = item.get("ticker", "")
     level = scores.get("risk_level", "")
+    label = stock_label(item)
+    name = stock_name(item)
     return f"""
     <article class="stock-panel" id="{esc(ticker)}">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #{esc(item.get('final_rank', '')) or ''}</span>
-          <h2>{esc(ticker)}</h2>
+          <span class="rank-chip">推荐 #{esc(item.get('final_rank', '')) or ''}</span>
+          <h2>{esc(label)}</h2>
           <p>{esc(scores.get('industry', '未知行业'))} · Model-A #{esc(item.get('candidate_rank', ''))}</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>{fmt_num(scores.get('quant_score'))}</b>
-          <span>TECH</span>
-          <b>{fmt_num(scores.get('technical_score'))}</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>{fmt_pct(tech.get('day_return'))}</b>
+          <span>最后一小时</span>
+          <b>{fmt_pct(tech.get('last_hour_return'))}</b>
         </div>
-        <div class="score-orb">
-          <strong>{fmt_num(scores.get('final_score'))}</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#{esc(item.get('final_rank', ''))}</strong>
+          <span>{esc(name or ticker)}</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          {score_bar('量化证据', scores.get('quant_score'), 'cyan')}
-          {score_bar('技术形态', scores.get('technical_score'), 'green')}
-          {score_bar('基本面', scores.get('fundamental_score'), 'amber')}
-          {score_bar('新闻情绪', scores.get('event_sentiment_score'), 'pink')}
-          {score_bar('看空风险', scores.get('bear_risk_score'), 'red')}
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>{esc(trend_sentence(tech.get('day_return'), tech.get('last_hour_return'), tech.get('amplitude')))}</p>
+          <p>{esc(event_sentence(item))}</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>{esc(name or '暂无')}</dd>
+            <dt>代码</dt><dd>{esc(ticker)}</dd>
             <dt>日内涨跌</dt><dd>{fmt_pct(tech.get('day_return'))}</dd>
             <dt>最后一小时</dt><dd>{fmt_pct(tech.get('last_hour_return'))}</dd>
             <dt>ROE</dt><dd>{esc(fin.get('roe') or '暂无')}</dd>
@@ -264,7 +411,7 @@ def stock_panel(item: dict[str, Any]) -> str:
       <section class="panel agent-section">
         <h3>多智能体观点</h3>
         {human_analysis_panel(item)}
-        <div class="agent-grid">{agent_grid(item.get('agent_report', {}))}</div>
+        <div class="agent-grid">{agent_grid(item)}</div>
       </section>
       <section class="evidence-grid">
         <div class="panel">
@@ -324,9 +471,7 @@ def date_page(
         trade_rows.append('<tr><td colspan="6" class="muted">当日信号尚无已完成成交，或因持仓占用跳过。</td></tr>')
 
     skipped_text = "；".join(day_skipped["reason"].astype(str).tolist()) if not day_skipped.empty else "无"
-    nav_links = "\n".join(
-        f'<a href="#{esc(item.get("ticker"))}">#{idx} {esc(item.get("ticker"))}</a>' for idx, item in enumerate(ranked, start=1)
-    )
+    top_cards = "\n".join(top_pick_card(item) for item in ranked)
     body = f"""
     <!doctype html>
     <html lang="zh-CN">
@@ -354,14 +499,10 @@ def date_page(
         <header class="hero compact">
           <div>
             <span class="eyebrow">交易日 {esc(date)}</span>
-            <h1>TradingAgents 建议 Top5</h1>
-            <p>前置 Model-A 只生成 top20 候选，本页展示独立后处理模块的二次分析、证据和讨论结论。</p>
+            <h1>今日推荐 Top5</h1>
+            <p>基于 Model-A 候选、15:00 前 5min 走势、公告新闻和风险线索形成的发布建议。每张卡片可直接跳到对应股票详情。</p>
           </div>
-          <div class="mission-panel">
-            <div class="scanner"></div>
-            <span>ACTIVE WATCHLIST</span>
-            <div class="mini-nav">{nav_links}</div>
-          </div>
+          <div class="top-pick-grid">{top_cards}</div>
         </header>
         <section class="trade-strip">
           <div>
@@ -619,7 +760,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 12px;
   letter-spacing: 0;
 }
-.hero.compact { min-height: 280px; grid-template-columns: minmax(0, 1fr) 430px; }
+.hero.compact { min-height: 250px; grid-template-columns: 360px minmax(0, 1fr); align-items: center; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -745,6 +886,39 @@ p { color: #bad0e8; line-height: 1.72; }
   box-shadow: inset 0 0 14px rgba(36,216,255,.06);
 }
 .mini-nav { display: flex; flex-wrap: wrap; gap: 10px; align-content: end; }
+.top-pick-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  align-items: stretch;
+}
+.top-pick-card {
+  min-height: 168px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.025)),
+    rgba(2,9,18,.50);
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  box-shadow: 0 16px 34px rgba(0,0,0,.22);
+}
+.top-pick-card span { color: var(--green); font-size: 13px; }
+.top-pick-card strong { color: var(--text); font-size: 26px; line-height: 1.12; }
+.top-pick-card em { color: var(--cyan); font-style: normal; font-size: 15px; }
+.top-pick-card small { color: var(--muted); line-height: 1.45; }
+.top-pick-card b {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(123,247,196,.10);
+  border: 1px solid rgba(123,247,196,.28);
+  color: var(--green);
+  font-size: 12px;
+}
 .mission-panel {
   border: 1px solid rgba(36,216,255,.28);
   border-radius: 8px;
@@ -787,7 +961,7 @@ tr:hover td { background: rgba(36,216,255,.035); }
 }
 .signal-stack span { color: var(--muted); font-size: 11px; }
 .signal-stack b { color: var(--green); font-weight: 700; }
-.score-orb {
+.score-orb, .recommend-orb {
   width: 118px;
   height: 118px;
   border-radius: 50%;
@@ -798,8 +972,8 @@ tr:hover td { background: rgba(36,216,255,.035); }
   background: radial-gradient(circle, rgba(36,216,255,.20), rgba(2,9,18,.58) 62%, rgba(123,247,196,.10));
   box-shadow: 0 0 44px rgba(36, 216, 255, 0.24), inset 0 0 24px rgba(123,247,196,.10);
 }
-.score-orb strong { font-size: 28px; color: var(--green); }
-.score-orb span { color: var(--muted); font-size: 12px; }
+.score-orb strong, .recommend-orb strong { font-size: 28px; color: var(--green); }
+.score-orb span, .recommend-orb span { color: var(--muted); font-size: 12px; padding: 0 10px; }
 .stock-grid, .evidence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 18px; }
 .agent-section { margin: 0 18px 18px; }
 .score-row { display: grid; grid-template-columns: 86px 1fr 56px; align-items: center; gap: 10px; margin: 14px 0; color: #cfdaea; }
@@ -830,13 +1004,14 @@ ul { margin: 0; padding-left: 18px; color: #cbd8e8; line-height: 1.8; }
 @media (max-width: 1100px) {
   .hero, .hero.compact, .dashboard-grid, .stock-grid, .evidence-grid, .trade-strip, .stock-head { grid-template-columns: 1fr; }
   .metrics-grid, .days-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .top-pick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .agent-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
   .shell { width: min(100% - 24px, 1440px); padding-top: 14px; }
   .hero { padding: 24px; }
   h1 { font-size: 38px; }
-  .metrics-grid, .days-grid, .agent-grid { grid-template-columns: 1fr; }
+  .metrics-grid, .days-grid, .agent-grid, .top-pick-grid { grid-template-columns: 1fr; }
   .stock-head { align-items: flex-start; flex-direction: column; }
 }
 
@@ -952,6 +1127,9 @@ body::after { box-shadow: inset 0 0 120px rgba(102,116,132,.16); }
   box-shadow: 0 16px 34px rgba(39, 51, 68, .12);
   backdrop-filter: blur(18px);
 }
+.hero.compact {
+  grid-template-columns: 330px minmax(0, 1fr);
+}
 .hero::before {
   background:
     linear-gradient(90deg, rgba(194,13,23,.32), transparent 20%, transparent 80%, rgba(47,95,181,.24)),
@@ -1048,6 +1226,24 @@ p { color: #4d5b6b; }
   border-color: #d7e3f0;
   box-shadow: none;
 }
+.top-pick-card {
+  background: #ffffff;
+  border-color: #d6dee7;
+  box-shadow: 0 12px 24px rgba(39, 51, 68, .11);
+}
+.top-pick-card:hover {
+  border-color: #c20d17;
+  box-shadow: 0 16px 32px rgba(194, 13, 23, .14);
+}
+.top-pick-card span { color: #b20b15; }
+.top-pick-card strong { color: #101820; }
+.top-pick-card em { color: #1f5da7; }
+.top-pick-card small { color: #667484; }
+.top-pick-card b {
+  background: #f4f7fa;
+  border-color: #dce4ec;
+  color: #1f5da7;
+}
 th { color: #647183; background: #f2f5f8; }
 td { color: #17212c; }
 tr:hover td { background: #f7f9fb; }
@@ -1069,15 +1265,15 @@ tr:hover td { background: #f7f9fb; }
 }
 .signal-stack span { color: #697789; }
 .signal-stack b { color: #b20b15; }
-.score-orb {
+.score-orb, .recommend-orb {
   width: 106px;
   height: 106px;
   background: #fff;
   border-color: #d91624;
   box-shadow: 0 14px 28px rgba(194,13,23,.16), inset 0 0 0 8px #f5f7fa;
 }
-.score-orb strong { color: #b20b15; }
-.score-orb span { color: #667484; }
+.score-orb strong, .recommend-orb strong { color: #b20b15; }
+.score-orb span, .recommend-orb span { color: #667484; }
 .meter { background: #e9eef4; box-shadow: none; }
 .meter i { box-shadow: none; }
 .score-row { color: #283746; }
@@ -1096,6 +1292,7 @@ ul { color: #344354; }
   .brand-mark { min-width: 170px; margin-bottom: 0; }
   .side-nav a { white-space: nowrap; }
   .days-grid { grid-template-columns: 1fr; }
+  .top-pick-grid { grid-template-columns: 1fr; }
 }
 """
     (output_dir / "style.css").write_text(css, encoding="utf-8")
@@ -1115,6 +1312,7 @@ def inline_css(output_dir: Path) -> None:
 
 
 def main() -> None:
+    global STOCK_NAME_MAP
     args = parse_args()
     analysis_dir = Path(args.analysis_dir)
     portfolio_dir = Path(args.portfolio_dir)
@@ -1127,6 +1325,7 @@ def main() -> None:
     payloads = load_analysis(analysis_dir)
     if not payloads:
         raise FileNotFoundError(f"analysis json not found: {analysis_dir}")
+    STOCK_NAME_MAP = load_stock_names(Path(args.stock_basic))
 
     summary_path = portfolio_dir / "summary.json"
     summary = json.loads(summary_path.read_text(encoding="utf-8")) if summary_path.exists() else {}

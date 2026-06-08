@@ -106,7 +106,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 12px;
   letter-spacing: 0;
 }
-.hero.compact { min-height: 280px; grid-template-columns: minmax(0, 1fr) 430px; }
+.hero.compact { min-height: 250px; grid-template-columns: 360px minmax(0, 1fr); align-items: center; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -232,6 +232,39 @@ p { color: #bad0e8; line-height: 1.72; }
   box-shadow: inset 0 0 14px rgba(36,216,255,.06);
 }
 .mini-nav { display: flex; flex-wrap: wrap; gap: 10px; align-content: end; }
+.top-pick-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  align-items: stretch;
+}
+.top-pick-card {
+  min-height: 168px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.025)),
+    rgba(2,9,18,.50);
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  box-shadow: 0 16px 34px rgba(0,0,0,.22);
+}
+.top-pick-card span { color: var(--green); font-size: 13px; }
+.top-pick-card strong { color: var(--text); font-size: 26px; line-height: 1.12; }
+.top-pick-card em { color: var(--cyan); font-style: normal; font-size: 15px; }
+.top-pick-card small { color: var(--muted); line-height: 1.45; }
+.top-pick-card b {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(123,247,196,.10);
+  border: 1px solid rgba(123,247,196,.28);
+  color: var(--green);
+  font-size: 12px;
+}
 .mission-panel {
   border: 1px solid rgba(36,216,255,.28);
   border-radius: 8px;
@@ -274,7 +307,7 @@ tr:hover td { background: rgba(36,216,255,.035); }
 }
 .signal-stack span { color: var(--muted); font-size: 11px; }
 .signal-stack b { color: var(--green); font-weight: 700; }
-.score-orb {
+.score-orb, .recommend-orb {
   width: 118px;
   height: 118px;
   border-radius: 50%;
@@ -285,8 +318,8 @@ tr:hover td { background: rgba(36,216,255,.035); }
   background: radial-gradient(circle, rgba(36,216,255,.20), rgba(2,9,18,.58) 62%, rgba(123,247,196,.10));
   box-shadow: 0 0 44px rgba(36, 216, 255, 0.24), inset 0 0 24px rgba(123,247,196,.10);
 }
-.score-orb strong { font-size: 28px; color: var(--green); }
-.score-orb span { color: var(--muted); font-size: 12px; }
+.score-orb strong, .recommend-orb strong { font-size: 28px; color: var(--green); }
+.score-orb span, .recommend-orb span { color: var(--muted); font-size: 12px; padding: 0 10px; }
 .stock-grid, .evidence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 18px; }
 .agent-section { margin: 0 18px 18px; }
 .score-row { display: grid; grid-template-columns: 86px 1fr 56px; align-items: center; gap: 10px; margin: 14px 0; color: #cfdaea; }
@@ -317,13 +350,14 @@ ul { margin: 0; padding-left: 18px; color: #cbd8e8; line-height: 1.8; }
 @media (max-width: 1100px) {
   .hero, .hero.compact, .dashboard-grid, .stock-grid, .evidence-grid, .trade-strip, .stock-head { grid-template-columns: 1fr; }
   .metrics-grid, .days-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .top-pick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .agent-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
   .shell { width: min(100% - 24px, 1440px); padding-top: 14px; }
   .hero { padding: 24px; }
   h1 { font-size: 38px; }
-  .metrics-grid, .days-grid, .agent-grid { grid-template-columns: 1fr; }
+  .metrics-grid, .days-grid, .agent-grid, .top-pick-grid { grid-template-columns: 1fr; }
   .stock-head { align-items: flex-start; flex-direction: column; }
 }
 
@@ -439,6 +473,9 @@ body::after { box-shadow: inset 0 0 120px rgba(102,116,132,.16); }
   box-shadow: 0 16px 34px rgba(39, 51, 68, .12);
   backdrop-filter: blur(18px);
 }
+.hero.compact {
+  grid-template-columns: 330px minmax(0, 1fr);
+}
 .hero::before {
   background:
     linear-gradient(90deg, rgba(194,13,23,.32), transparent 20%, transparent 80%, rgba(47,95,181,.24)),
@@ -535,6 +572,24 @@ p { color: #4d5b6b; }
   border-color: #d7e3f0;
   box-shadow: none;
 }
+.top-pick-card {
+  background: #ffffff;
+  border-color: #d6dee7;
+  box-shadow: 0 12px 24px rgba(39, 51, 68, .11);
+}
+.top-pick-card:hover {
+  border-color: #c20d17;
+  box-shadow: 0 16px 32px rgba(194, 13, 23, .14);
+}
+.top-pick-card span { color: #b20b15; }
+.top-pick-card strong { color: #101820; }
+.top-pick-card em { color: #1f5da7; }
+.top-pick-card small { color: #667484; }
+.top-pick-card b {
+  background: #f4f7fa;
+  border-color: #dce4ec;
+  color: #1f5da7;
+}
 th { color: #647183; background: #f2f5f8; }
 td { color: #17212c; }
 tr:hover td { background: #f7f9fb; }
@@ -556,15 +611,15 @@ tr:hover td { background: #f7f9fb; }
 }
 .signal-stack span { color: #697789; }
 .signal-stack b { color: #b20b15; }
-.score-orb {
+.score-orb, .recommend-orb {
   width: 106px;
   height: 106px;
   background: #fff;
   border-color: #d91624;
   box-shadow: 0 14px 28px rgba(194,13,23,.16), inset 0 0 0 8px #f5f7fa;
 }
-.score-orb strong { color: #b20b15; }
-.score-orb span { color: #667484; }
+.score-orb strong, .recommend-orb strong { color: #b20b15; }
+.score-orb span, .recommend-orb span { color: #667484; }
 .meter { background: #e9eef4; box-shadow: none; }
 .meter i { box-shadow: none; }
 .score-row { color: #283746; }
@@ -583,6 +638,7 @@ ul { color: #344354; }
   .brand-mark { min-width: 170px; margin-bottom: 0; }
   .side-nav a { white-space: nowrap; }
   .days-grid { grid-template-columns: 1fr; }
+  .top-pick-grid { grid-template-columns: 1fr; }
 }
 
 </style>
@@ -605,18 +661,54 @@ ul { color: #344354; }
         <header class="hero compact">
           <div>
             <span class="eyebrow">交易日 2026-06-04</span>
-            <h1>TradingAgents 建议 Top5</h1>
-            <p>前置 Model-A 只生成 top20 候选，本页展示独立后处理模块的二次分析、证据和讨论结论。</p>
+            <h1>今日推荐 Top5</h1>
+            <p>基于 Model-A 候选、15:00 前 5min 走势、公告新闻和风险线索形成的发布建议。每张卡片可直接跳到对应股票详情。</p>
           </div>
-          <div class="mission-panel">
-            <div class="scanner"></div>
-            <span>ACTIVE WATCHLIST</span>
-            <div class="mini-nav"><a href="#SZ000639">#1 SZ000639</a>
-<a href="#SH600237">#2 SH600237</a>
-<a href="#SZ301188">#3 SZ301188</a>
-<a href="#SH603989">#4 SH603989</a>
-<a href="#SH601798">#5 SH601798</a></div>
-          </div>
+          <div class="top-pick-grid">
+    <a class="top-pick-card" href="#SZ000639">
+      <span>推荐 #1</span>
+      <strong>ST西王</strong>
+      <em>SZ000639</em>
+      <small>农林牧渔 · 日内 0.00%</small>
+      <b>重点关注</b>
+    </a>
+    
+
+    <a class="top-pick-card" href="#SH600237">
+      <span>推荐 #2</span>
+      <strong>铜峰电子</strong>
+      <em>SH600237</em>
+      <small>电子 · 日内 12.11%</small>
+      <b>重点关注</b>
+    </a>
+    
+
+    <a class="top-pick-card" href="#SZ301188">
+      <span>推荐 #3</span>
+      <strong>力诺药包</strong>
+      <em>SZ301188</em>
+      <small>建筑材料 · 日内 23.95%</small>
+      <b>重点关注</b>
+    </a>
+    
+
+    <a class="top-pick-card" href="#SH603989">
+      <span>推荐 #4</span>
+      <strong>艾华集团</strong>
+      <em>SH603989</em>
+      <small>电子 · 日内 11.60%</small>
+      <b>重点关注</b>
+    </a>
+    
+
+    <a class="top-pick-card" href="#SH601798">
+      <span>推荐 #5</span>
+      <strong>蓝科高新</strong>
+      <em>SH601798</em>
+      <small>机械设备 · 日内 -4.51%</small>
+      <b>重点关注</b>
+    </a>
+    </div>
         </header>
         <section class="trade-strip">
           <div>
@@ -642,63 +734,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SZ000639">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #1</span>
-          <h2>SZ000639</h2>
+          <span class="rank-chip">推荐 #1</span>
+          <h2>ST西王 SZ000639</h2>
           <p>农林牧渔 · Model-A #1</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.876</b>
-          <span>TECH</span>
-          <b>0.461</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>0.00%</b>
+          <span>最后一小时</span>
+          <b>0.00%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.494</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#1</strong>
+          <span>ST西王</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:87.6%"></i></div>
-      <b>0.876</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:46.1%"></i></div>
-      <b>0.461</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:50.0%"></i></div>
-      <b>0.500</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:0.0%"></i></div>
-      <b>0.000</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:15.8%"></i></div>
-      <b>0.158</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 1.24%，波动相对可控。</p>
+          <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>ST西王</dd>
+            <dt>代码</dt><dd>SZ000639</dd>
             <dt>日内涨跌</dt><dd>0.00%</dd>
             <dt>最后一小时</dt><dd>0.00%</dd>
             <dt>ROE</dt><dd>暂无</dd>
@@ -713,47 +774,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SZ000639 是 Model-A 候选池中的第 1 名，二级分析最终分 0.494。量化分 0.876，技术分 0.461，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 0.00%，最后一小时为 0.00%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：暂无明确事件线索 情绪命中正向 0 次、负向 0 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 低。未看到必须单独剔除的重大负面标题，但仍需结合成交量和次日价格确认。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>ST西王 SZ000639 位于本日最终推荐第 1 位，行业归类为农林牧渔。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 1.24%，波动相对可控。</p>
+      <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
+      <p>风险判断：低。名称或公告中带有 ST/异常波动线索，隔日买入需要优先考虑能否成交和回撤控制。</p>
+      <p class="action-note">综合评估：ST西王 SZ000639 虽进入推荐序列，但 ST 属性和异常波动公告会放大隔日买入风险，只适合小仓位观察，不能按普通强势股处理。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 1，分数 1.530570。Kronos endpoint=1.0373%，不确定性=0.006960。量化分 0.876。</p>
+              <span>候选来源</span>
+              <p>ST西王 SZ000639 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 0.00%，最后一小时 0.00%，成交额 0.68亿元。技术分 0.461。</p>
+              <span>盘面观察</span>
+              <p>信号日全天涨跌 0.00%，价格表现相对温和；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 1.24%，波动相对可控。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 农林牧渔。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。</p>
+              <span>事件观察</span>
+              <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为低。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.158。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.494，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：ST西王 SZ000639 虽进入推荐序列，但 ST 属性和异常波动公告会放大隔日买入风险，只适合小仓位观察，不能按普通强势股处理。</p>
             </article>
             </div>
       </section>
@@ -772,63 +827,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SH600237">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #2</span>
-          <h2>SH600237</h2>
+          <span class="rank-chip">推荐 #2</span>
+          <h2>铜峰电子 SH600237</h2>
           <p>电子 · Model-A #14</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.469</b>
-          <span>TECH</span>
-          <b>0.875</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>12.11%</b>
+          <span>最后一小时</span>
+          <b>0.00%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.426</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#2</strong>
+          <span>铜峰电子</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:46.9%"></i></div>
-      <b>0.469</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:87.5%"></i></div>
-      <b>0.875</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:50.0%"></i></div>
-      <b>0.500</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:0.0%"></i></div>
-      <b>0.000</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:26.4%"></i></div>
-      <b>0.264</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天涨幅 12.11%，属于明显走强；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 12.83%，波动很大。</p>
+          <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>铜峰电子</dd>
+            <dt>代码</dt><dd>SH600237</dd>
             <dt>日内涨跌</dt><dd>12.11%</dd>
             <dt>最后一小时</dt><dd>0.00%</dd>
             <dt>ROE</dt><dd>暂无</dd>
@@ -843,47 +867,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SH600237 是 Model-A 候选池中的第 14 名，二级分析最终分 0.426。量化分 0.469，技术分 0.875，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 12.11%，最后一小时为 0.00%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：暂无明确事件线索 情绪命中正向 0 次、负向 0 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 低。未看到必须单独剔除的重大负面标题，但仍需结合成交量和次日价格确认。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>铜峰电子 SH600237 位于本日最终推荐第 2 位，行业归类为电子。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天涨幅 12.11%，属于明显走强；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 12.83%，波动很大。</p>
+      <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
+      <p>风险判断：低。暂未看到需要单独剔除的重大负面标题，但仍要看次日开盘承接。</p>
+      <p class="action-note">综合评估：铜峰电子 SH600237 当天已经明显走强，后续重点看次日开盘能否继续承接；若开盘直接高位失速，应降低追入优先级。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 14，分数 0.657219。Kronos endpoint=2.8188%，不确定性=0.006563。量化分 0.469。</p>
+              <span>候选来源</span>
+              <p>铜峰电子 SH600237 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 12.11%，最后一小时 0.00%，成交额 17.63亿元。技术分 0.875。</p>
+              <span>盘面观察</span>
+              <p>信号日全天涨幅 12.11%，属于明显走强；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 12.83%，波动很大。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 电子。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。</p>
+              <span>事件观察</span>
+              <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为低。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.264。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.426，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：铜峰电子 SH600237 当天已经明显走强，后续重点看次日开盘能否继续承接；若开盘直接高位失速，应降低追入优先级。</p>
             </article>
             </div>
       </section>
@@ -902,63 +920,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SZ301188">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #3</span>
-          <h2>SZ301188</h2>
+          <span class="rank-chip">推荐 #3</span>
+          <h2>力诺药包 SZ301188</h2>
           <p>建筑材料 · Model-A #12</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.458</b>
-          <span>TECH</span>
-          <b>0.857</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>23.95%</b>
+          <span>最后一小时</span>
+          <b>0.00%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.414</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#3</strong>
+          <span>力诺药包</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:45.8%"></i></div>
-      <b>0.458</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:85.7%"></i></div>
-      <b>0.857</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:50.0%"></i></div>
-      <b>0.500</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:0.0%"></i></div>
-      <b>0.000</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:28.4%"></i></div>
-      <b>0.284</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天涨幅 23.95%，属于明显走强；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 25.03%，波动很大。</p>
+          <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>力诺药包</dd>
+            <dt>代码</dt><dd>SZ301188</dd>
             <dt>日内涨跌</dt><dd>23.95%</dd>
             <dt>最后一小时</dt><dd>0.00%</dd>
             <dt>ROE</dt><dd>暂无</dd>
@@ -973,47 +960,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SZ301188 是 Model-A 候选池中的第 12 名，二级分析最终分 0.414。量化分 0.458，技术分 0.857，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 23.95%，最后一小时为 0.00%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：暂无明确事件线索 情绪命中正向 0 次、负向 0 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 低。未看到必须单独剔除的重大负面标题，但仍需结合成交量和次日价格确认。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>力诺药包 SZ301188 位于本日最终推荐第 3 位，行业归类为建筑材料。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天涨幅 23.95%，属于明显走强；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 25.03%，波动很大。</p>
+      <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
+      <p>风险判断：低。暂未看到需要单独剔除的重大负面标题，但仍要看次日开盘承接。</p>
+      <p class="action-note">综合评估：力诺药包 SZ301188 当天已经明显走强，后续重点看次日开盘能否继续承接；若开盘直接高位失速，应降低追入优先级。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 12，分数 0.679463。Kronos endpoint=0.7730%，不确定性=0.005081。量化分 0.458。</p>
+              <span>候选来源</span>
+              <p>力诺药包 SZ301188 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 23.95%，最后一小时 0.00%，成交额 17.79亿元。技术分 0.857。</p>
+              <span>盘面观察</span>
+              <p>信号日全天涨幅 23.95%，属于明显走强；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 25.03%，波动很大。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 建筑材料。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。</p>
+              <span>事件观察</span>
+              <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为低。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.284。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.414，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：力诺药包 SZ301188 当天已经明显走强，后续重点看次日开盘能否继续承接；若开盘直接高位失速，应降低追入优先级。</p>
             </article>
             </div>
       </section>
@@ -1032,63 +1013,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SH603989">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #4</span>
-          <h2>SH603989</h2>
+          <span class="rank-chip">推荐 #4</span>
+          <h2>艾华集团 SH603989</h2>
           <p>电子 · Model-A #16</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.385</b>
-          <span>TECH</span>
-          <b>0.875</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>11.60%</b>
+          <span>最后一小时</span>
+          <b>0.00%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.387</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#4</strong>
+          <span>艾华集团</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:38.5%"></i></div>
-      <b>0.385</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:87.5%"></i></div>
-      <b>0.875</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:50.0%"></i></div>
-      <b>0.500</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:0.0%"></i></div>
-      <b>0.000</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:30.7%"></i></div>
-      <b>0.307</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天涨幅 11.60%，属于明显走强；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 11.82%，波动很大。</p>
+          <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>艾华集团</dd>
+            <dt>代码</dt><dd>SH603989</dd>
             <dt>日内涨跌</dt><dd>11.60%</dd>
             <dt>最后一小时</dt><dd>0.00%</dd>
             <dt>ROE</dt><dd>暂无</dd>
@@ -1103,47 +1053,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SH603989 是 Model-A 候选池中的第 16 名，二级分析最终分 0.387。量化分 0.385，技术分 0.875，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 11.60%，最后一小时为 0.00%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：暂无明确事件线索 情绪命中正向 0 次、负向 0 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 低。未看到必须单独剔除的重大负面标题，但仍需结合成交量和次日价格确认。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>艾华集团 SH603989 位于本日最终推荐第 4 位，行业归类为电子。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天涨幅 11.60%，属于明显走强；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 11.82%，波动很大。</p>
+      <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
+      <p>风险判断：低。暂未看到需要单独剔除的重大负面标题，但仍要看次日开盘承接。</p>
+      <p class="action-note">综合评估：艾华集团 SH603989 当天已经明显走强，后续重点看次日开盘能否继续承接；若开盘直接高位失速，应降低追入优先级。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 16，分数 0.630670。Kronos endpoint=2.0579%，不确定性=0.014392。量化分 0.385。</p>
+              <span>候选来源</span>
+              <p>艾华集团 SH603989 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 11.60%，最后一小时 0.00%，成交额 10.03亿元。技术分 0.875。</p>
+              <span>盘面观察</span>
+              <p>信号日全天涨幅 11.60%，属于明显走强；最后一小时小幅回落 0.00%，尾盘动能一般；日内振幅 11.82%，波动很大。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 电子。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。</p>
+              <span>事件观察</span>
+              <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为低。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.307。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.387，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：艾华集团 SH603989 当天已经明显走强，后续重点看次日开盘能否继续承接；若开盘直接高位失速，应降低追入优先级。</p>
             </article>
             </div>
       </section>
@@ -1162,63 +1106,32 @@ ul { color: #344354; }
     <article class="stock-panel" id="SH601798">
       <header class="stock-head">
         <div>
-          <span class="rank-chip">TA #5</span>
-          <h2>SH601798</h2>
+          <span class="rank-chip">推荐 #5</span>
+          <h2>蓝科高新 SH601798</h2>
           <p>机械设备 · Model-A #5</p>
         </div>
-        <div class="signal-stack">
-          <span>QUANT</span>
-          <b>0.645</b>
-          <span>TECH</span>
-          <b>0.392</b>
+        <div class="signal-stack evidence-stack">
+          <span>日内表现</span>
+          <b>-4.51%</b>
+          <span>最后一小时</span>
+          <b>-0.11%</b>
         </div>
-        <div class="score-orb">
-          <strong>0.379</strong>
-          <span>FINAL</span>
+        <div class="recommend-orb">
+          <strong>#5</strong>
+          <span>蓝科高新</span>
         </div>
       </header>
       <div class="stock-grid">
-        <section class="panel scores">
-          <h3>五维评分</h3>
-          
-    <div class="score-row cyan">
-      <span>量化证据</span>
-      <div class="meter"><i style="width:64.5%"></i></div>
-      <b>0.645</b>
-    </div>
-    
-          
-    <div class="score-row green">
-      <span>技术形态</span>
-      <div class="meter"><i style="width:39.2%"></i></div>
-      <b>0.392</b>
-    </div>
-    
-          
-    <div class="score-row amber">
-      <span>基本面</span>
-      <div class="meter"><i style="width:50.0%"></i></div>
-      <b>0.500</b>
-    </div>
-    
-          
-    <div class="score-row pink">
-      <span>新闻情绪</span>
-      <div class="meter"><i style="width:0.0%"></i></div>
-      <b>0.000</b>
-    </div>
-    
-          
-    <div class="score-row red">
-      <span>看空风险</span>
-      <div class="meter"><i style="width:23.8%"></i></div>
-      <b>0.238</b>
-    </div>
-    
+        <section class="panel readable-panel">
+          <h3>当日观察</h3>
+          <p>信号日全天下跌 -4.51%，需要防止弱势延续；最后一小时小幅回落 -0.11%，尾盘动能一般；日内振幅 6.31%，波动中等偏高。</p>
+          <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
         </section>
         <section class="panel facts">
           <h3>核心证据</h3>
           <dl>
+            <dt>名称</dt><dd>蓝科高新</dd>
+            <dt>代码</dt><dd>SH601798</dd>
             <dt>日内涨跌</dt><dd>-4.51%</dd>
             <dt>最后一小时</dt><dd>-0.11%</dd>
             <dt>ROE</dt><dd>暂无</dd>
@@ -1233,47 +1146,41 @@ ul { color: #344354; }
         
     <section class="panel readable-panel">
       <h3>投研解读</h3>
-      <p>SH601798 是 Model-A 候选池中的第 5 名，二级分析最终分 0.379。量化分 0.645，技术分 0.392，说明它主要是由模型信号和盘面行为共同推上来。</p>
-      <p>信号日下午收盘前日内表现为 -4.51%，最后一小时为 -0.11%。如果最后一小时走强，说明短线资金仍在承接；如果走弱，则应降低追高预期。</p>
-      <p>公告和新闻的可读结论：暂无明确事件线索 情绪命中正向 0 次、负向 0 次，不能简单理解为利好或利空，需要看次日资金是否继续确认。</p>
-      <p>风险等级为 低。未看到必须单独剔除的重大负面标题，但仍需结合成交量和次日价格确认。</p>
-      <p class="action-note">发布建议：保留在候选观察池，实盘发布时应同时给出买入计划、止损条件和隔日复盘结论；该页面当前展示的是投研解释层，后续可替换为大模型生成的最终表述。</p>
+      <p>蓝科高新 SH601798 位于本日最终推荐第 5 位，行业归类为机械设备。这不是只看模型内部排序，而是把 5min 候选、当日走势、公告新闻和风险线索合在一起后的发布建议。</p>
+      <p>信号日全天下跌 -4.51%，需要防止弱势延续；最后一小时小幅回落 -0.11%，尾盘动能一般；日内振幅 6.31%，波动中等偏高。</p>
+      <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
+      <p>风险判断：低。暂未看到需要单独剔除的重大负面标题，但仍要看次日开盘承接。</p>
+      <p class="action-note">综合评估：蓝科高新 SH601798 排名靠前但当天走势偏弱，适合等次日修复确认后再考虑，不能只凭模型排序追买。</p>
     </section>
     
         <div class="agent-grid">
             <article class="agent-card">
-              <span>量化证据分析师</span>
-              <p>Model-A 候选排序第 5，分数 0.857350。Kronos endpoint=-0.0535%，不确定性=0.011899。量化分 0.645。</p>
+              <span>候选来源</span>
+              <p>蓝科高新 SH601798 来自 Model-A 全市场候选池，再经过公告、新闻和盘面证据复核后进入最终推荐。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>技术分析师</span>
-              <p>15:00 前日内涨跌 -4.51%，最后一小时 -0.11%，成交额 3.35亿元。技术分 0.392。</p>
+              <span>盘面观察</span>
+              <p>信号日全天下跌 -4.51%，需要防止弱势延续；最后一小时小幅回落 -0.11%，尾盘动能一般；日内振幅 6.31%，波动中等偏高。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>基本面分析师</span>
-              <p>行业为 机械设备。ROE=暂无，毛利率=暂无，净利润=暂无。基本面分 0.500。</p>
+              <span>事件观察</span>
+              <p>未抓到足够明确的公告或新闻线索，本次主要依据盘面行为和 Model-A 候选结果观察。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看多研究员</span>
-              <p>看多理由：候选排名靠前、短线模型分较高；若技术分和公告/新闻情绪同时为正，可作为 top20 中优先候选。</p>
+              <span>风险提示</span>
+              <p>当前风险归类为低。ST、异常波动、龙虎榜和隔日开盘承接是需要重点复核的因素。</p>
             </article>
             
 
             <article class="agent-card">
-              <span>看空研究员</span>
-              <p>反方观点：外部证据缺失或负面标题会降低可信度；高不确定性、振幅过大和基本面弱会抬升风险。风险分 0.238。</p>
-            </article>
-            
-
-            <article class="agent-card">
-              <span>交易员结论</span>
-              <p>候补观察，最终分 0.379，风险等级 低。该结论只用于 Model-A top20 后的二次排序，不改变前置候选流程。</p>
+              <span>交易关注</span>
+              <p>综合评估：蓝科高新 SH601798 排名靠前但当天走势偏弱，适合等次日修复确认后再考虑，不能只凭模型排序追买。</p>
             </article>
             </div>
       </section>
